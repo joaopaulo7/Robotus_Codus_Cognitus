@@ -3,7 +3,7 @@ package neatRobotus;
 public class Conexao {
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
-	private double peso = 1;
+	private double peso = Math.random()*400-2;
 	private boolean ativado = true;
 	private int inovacao = 0;
 	

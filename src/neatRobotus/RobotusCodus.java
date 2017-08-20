@@ -17,8 +17,7 @@ public class RobotusCodus extends AdvancedRobot {
 			setRadarColor(new Color(200, 200, 70));
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
-			Genoma genoma = new Genoma();
-			Genoma.InitGenoma();
+			Genoma genoma = Populacao.ultimoGenoma;
 
 			// Loop forever
 			while (true) {
@@ -69,4 +68,4 @@ public class RobotusCodus extends AdvancedRobot {
 			turnRadarRight( r[9]);
 		}
 
-	}
+}

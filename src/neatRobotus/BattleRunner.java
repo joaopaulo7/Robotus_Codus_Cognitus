@@ -5,18 +5,8 @@ import robocode.control.events.*;
 
 
 public class BattleRunner {
-	
-	private static Genoma genoma = null;
-	
-	public BattleRunner( Genoma genoma){
-		BattleRunner.genoma = genoma;
-	}
-	
-	public static Genoma getGenoma(){
-		return BattleRunner.genoma;
-	}
 
-    public void startBatalha() {
+    public void startBatalha( boolean ver) {
         // Disable log messages from Robocode
         RobocodeEngine.setLogMessagesEnabled(true);
 
@@ -27,13 +17,13 @@ public class BattleRunner {
         engine.addBattleListener(new BattleObserver());
 
         // Show the Robocode battle view
-        engine.setVisible(false);
+        engine.setVisible(ver);
 
         // Setup the battle specification
 
         int numberOfRounds = 10;
         BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
-        RobotSpecification[] selectedRobots = engine.getLocalRepository("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus.RobotusCodus,sample.Corners");
+        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*,sample.Corners");
 
         BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
 
@@ -50,7 +40,7 @@ public class BattleRunner {
 //
 class BattleObserver extends BattleAdaptor {
 	
-	private Genoma genoma = BattleRunner.getGenoma();
+	private Genoma genoma = Populacao.ultimoGenoma;
 
     // Called when the battle is completed successfully with battle results
     public void onBattleCompleted(BattleCompletedEvent e) {
@@ -64,7 +54,7 @@ class BattleObserver extends BattleAdaptor {
         robocode.BattleResults robs[] = e.getSortedResults();
         for( int i = 0; i < 2; i++)
         {
-        	if(robs[i].getTeamLeaderName().equals("sampleex.Alien"))
+        	if(robs[i].getTeamLeaderName().equals("neatRobotus.RobotusCodus*"))
         		this.genoma.setFitness(robs[i].getScore());
         }
     }
