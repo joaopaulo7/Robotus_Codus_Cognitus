@@ -5,11 +5,17 @@ import java.util.ArrayList;
 public class Genoma {
 	private int fitness = 0;
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
+	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();
+	
 	protected static ArrayList<Input> inputs = new ArrayList<Input>();
 	protected static ArrayList<Output> outputs = new ArrayList<Output>();
 	
+	protected static double MUTAR_CONEXAO = 0.2;
+	protected static double MUTAR_NODULO = 0.3;
+	protected static double MUTAR_PESO = 0.5;
+	
+	//Inicialização dos Inputs e Outputs
 	public static void InitGenoma(){
-		
 		//Declaração de Inputs
 			//Relacionados ao próprio robô
 				Genoma.inputs.add(new Input("Altura do campo(y)"));
@@ -48,6 +54,13 @@ public class Genoma {
 			Genoma.outputs.add(new OutputAngular("Rotacionar radar para a direita"));
 	}
 	
+	//Construtores
+	public Genoma(){
+		for( int i = 0; i < 19; i++)
+			nodulos.add(outputs.get(i));
+	}
+	
+	//Gets e Sets
 	public void setFitness( int fit){
 		this.fitness = fit;
 	}
@@ -56,8 +69,26 @@ public class Genoma {
 	{
 		return this.fitness;
 	}
-
 	
+	//Mutações
+	public void mutar(){
+		while(true){
+			if( Math.random() < Genoma.MUTAR_CONEXAO){
+				this.genes.add(new Conexao(this.noduloAleatorio(), this.noduloAleatorio()));
+				return;
+			}
+			if( Math.random() < Genoma.MUTAR_NODULO){
+				this.nodulos.add(this.adicionarNodulo(this.conexaoAleatoria()));
+				return;
+			}
+			if( Math.random() < Genoma.MUTAR_PESO){
+				this.genes.get( ( int)(Math.random()*100)%this.genes.size());
+				return;
+			}
+		}
+	}
+	
+	//Ativação da rede
 	public double[] ativar( double v[]){
 		double g[] = new double[10]; 
 		for( int i = 0; i < v.length; i++)
@@ -68,5 +99,22 @@ public class Genoma {
 			g[i] = outputs.get(i).valor;
 		
 		return g;
+	}
+	
+	//Ferramentas
+	private Nodulo noduloAleatorio(){
+		return nodulos.get(( int)(Math.random()*100)%this.nodulos.size());
+	}
+	
+	private Conexao conexaoAleatoria(){
+		return genes.get(( int)(Math.random()*100)%this.genes.size());
+	}
+	
+	private Nodulo adicionarNodulo( Conexao c){
+		Nodulo proximoNodulo = c.getPosterior();
+		Nodulo novoNodulo = new Nodulo();
+		c.setPosterior(novoNodulo);
+		genes.add(new Conexao( novoNodulo, proximoNodulo));
+		return novoNodulo;
 	}
 }
