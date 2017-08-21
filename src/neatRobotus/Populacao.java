@@ -1,9 +1,9 @@
 package neatRobotus;
 
 public class Populacao extends RobotusCodus {
-	public static Genoma ultimoGenoma = null;
+	public static Genoma ultimoGenoma = new Genoma();
 	
-	public void NovoGenoma(){
+	public static void novoGenoma(){
 		Populacao.ultimoGenoma = new Genoma();
 	}
 }

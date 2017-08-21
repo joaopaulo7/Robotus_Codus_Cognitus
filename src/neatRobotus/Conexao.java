@@ -47,7 +47,7 @@ public class Conexao {
 	//FUNCIONAR
 	
 	public void ativar(){
-		this.anterior.setValor(this.anterior.getValor()*this.peso);
+		this.posterior.setValor(this.anterior.getValor()*this.peso);
 	}
 	
 }
