@@ -17,6 +17,7 @@ public class RobotusCodus extends AdvancedRobot {
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
 			Genoma genoma = Populacao.ultimoGenoma;
+			
 			// Loop forever
 			while (true) {
 					double[] r = genoma.ativar(this.estadoNormal());
