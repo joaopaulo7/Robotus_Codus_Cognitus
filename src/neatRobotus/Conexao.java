@@ -1,6 +1,11 @@
 package neatRobotus;
 
-public class Conexao {
+public class Conexao implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
 	private double peso = Math.random()*400-2;

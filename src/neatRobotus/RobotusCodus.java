@@ -4,6 +4,9 @@ import robocode.AdvancedRobot;
 import robocode.ScannedRobotEvent;
 
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 
 public class RobotusCodus extends AdvancedRobot {
@@ -16,8 +19,21 @@ public class RobotusCodus extends AdvancedRobot {
 			setRadarColor(new Color(200, 200, 70));
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
-			Genoma genoma = Populacao.ultimoGenoma;
-			
+			Genoma genoma;
+		     try {
+		         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+		         ObjectInputStream in = new ObjectInputStream(fileIn);
+		         genoma = (Genoma) in.readObject();
+		         in.close();
+		         fileIn.close();
+		      }catch(IOException i) {
+		         i.printStackTrace();
+		         return;
+		      }catch(ClassNotFoundException c) {
+		         System.out.println("Genoma não encontrado");
+		         c.printStackTrace();
+		         return;
+		      }
 			// Loop forever
 			while (true) {
 					double[] r = genoma.ativar(this.estadoNormal());

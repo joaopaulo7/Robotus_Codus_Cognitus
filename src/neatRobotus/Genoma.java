@@ -2,7 +2,13 @@ package neatRobotus;
 
 import java.util.ArrayList;
 
-public class Genoma {
+public class Genoma implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	private int fitness = 0;
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
 	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();

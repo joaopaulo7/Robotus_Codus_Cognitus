@@ -1,7 +1,12 @@
 package neatRobotus;
 
 
-public class Nodulo { //Unidade que vai armazenar os valores entre conexões(sinapses).
+public class Nodulo implements java.io.Serializable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	protected double valor = 0.0;
 	
 	public double getValor(){ //retorna o valor do nódulo
@@ -17,6 +22,11 @@ public class Nodulo { //Unidade que vai armazenar os valores entre conexões(sin
 //#INPUT#
 
 class Input extends Nodulo{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	protected String nome = "#";
 	
 	public Input( String nome){
@@ -33,6 +43,12 @@ class Input extends Nodulo{
 
 class Output extends Input{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+
 	public Output(String nome) {
 		super(nome);
 	}
@@ -41,6 +57,11 @@ class Output extends Input{
 //Os outputs são diferênciados pela formatação da saída.
 
 class OutputAngular extends Output{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public OutputAngular(String nome) {
 		super(nome);
@@ -53,6 +74,11 @@ class OutputAngular extends Output{
 }
 
 class OutputBool extends Output{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public OutputBool(String nome) {
 		super(nome);
@@ -68,6 +94,11 @@ class OutputBool extends Output{
 }
 
 class OutputNorm extends Output{
+
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 		public OutputNorm(String nome) {
 			super(nome);
