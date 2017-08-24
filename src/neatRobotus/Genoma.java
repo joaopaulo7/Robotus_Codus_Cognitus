@@ -21,7 +21,7 @@ public class Genoma implements java.io.Serializable{
 	protected static double MUTAR_PESO = 0.5;
 	
 	//Inicialização dos Inputs e Outputs
-	public Genoma(){
+	public Genoma( int potencialMulta){
 		//Declaração de Inputs
 			//Relacionados ao próprio robô
 				this.inputs.add(new Input("Altura do campo(y)"));
@@ -60,7 +60,15 @@ public class Genoma implements java.io.Serializable{
 			this.outputs.add(new OutputAngular("Rotacionar radar para a direita"));
 			for( int i = 0; i < 10; i++)
 				nodulos.add(outputs.get(i));
-			this.mutar();
+			this.mutar(potencialMulta);
+	}
+	
+	public Genoma( ArrayList<Conexao> conexaoAns, ArrayList<Nodulo> nodulosAns)
+	{
+		for(int i = 0; i< conexaoAns.size(); i++)
+			this.genes.add((Conexao) conexaoAns.get(i).clone());
+		for(int i = 0; i< nodulosAns.size(); i++)
+			this.nodulos.add((Nodulo) nodulosAns.get(i).clone());
 	}
 	
 	//Gets e Sets
@@ -74,20 +82,21 @@ public class Genoma implements java.io.Serializable{
 	}
 	
 	//Mutações
-	public void mutar(){
-		while(true){
+	public void mutar( int potencial){
+		int i = 0;
+		while(i < potencial){
 			if( Math.random() < Genoma.MUTAR_CONEXAO){
 				this.genes.add(new Conexao(this.noduloAleatorio(true), this.noduloAleatorio(false)));
 				System.out.println("nova conexao");
-				return;
+				i++;
 			}
-			if( Math.random() < Genoma.MUTAR_NODULO && genes.size() !=0){
+			else if( Math.random() < Genoma.MUTAR_NODULO && genes.size() !=0){
 				this.nodulos.add(this.adicionarNodulo(this.conexaoAleatoria()));
-				return;
+				i++;
 			}
-			if( Math.random() < Genoma.MUTAR_PESO && genes.size() !=0){
+			else if( Math.random() < Genoma.MUTAR_PESO && genes.size() !=0){
 				this.genes.get(( int)(Math.random()*100)%this.genes.size());
-				return;
+				i++;
 			}
 		}
 	}
@@ -131,4 +140,6 @@ public class Genoma implements java.io.Serializable{
 		genes.add(new Conexao( novoNodulo, proximoNodulo));
 		return novoNodulo;
 	}
+	
+	
 }

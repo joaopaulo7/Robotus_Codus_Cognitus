@@ -1,7 +1,7 @@
 package neatRobotus;
 
 
-public class Nodulo implements java.io.Serializable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
+public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
 	/**
 	 * 
 	 */

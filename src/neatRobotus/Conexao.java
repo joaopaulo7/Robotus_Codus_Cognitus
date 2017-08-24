@@ -1,6 +1,6 @@
 package neatRobotus;
 
-public class Conexao implements java.io.Serializable{
+public class Conexao implements java.io.Serializable, Cloneable{
 	/**
 	 * 
 	 */
@@ -36,11 +36,15 @@ public class Conexao implements java.io.Serializable{
 		this.peso = novo;
 	}
 	
-	public int getInovacao( int valor){
+	public int getInovacao(){
 		return this.inovacao;
 	}
 	public void setInovacao( int novo){
 		this.inovacao = novo;
+	}
+	
+	public boolean getEstado( ){
+		return this.ativado;
 	}
 	
 	//ALTERAR ESTADO

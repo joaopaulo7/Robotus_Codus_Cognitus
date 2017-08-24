@@ -42,7 +42,7 @@ public class BattleRunner {
 //
 class BattleObserver extends BattleAdaptor {
 	
-	private Genoma genoma = Populacao.ultimoGenoma;
+	private Genoma genoma = Populacao.getGenoma();
 
     // Called when the battle is completed successfully with battle results
     public void onBattleCompleted(BattleCompletedEvent e) {
