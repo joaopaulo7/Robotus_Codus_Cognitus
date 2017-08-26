@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
 	protected static int maxGenoma = 0;
-	protected static int geracao = 0;
+	protected static int geracao = 50;
 	
 	public static void novoGenoma(){
 		Populacao.genomas.add(new Genoma(1));
@@ -31,9 +31,9 @@ public class Populacao{
 	}
 	
 	private static Genoma crossOver( Genoma mae, Genoma pai){
-		ArrayList<Conexao> genes = new ArrayList<Conexao>();
+		ArrayList<int[]> inovacaoFilho = new ArrayList<int[]>();
 		int i = 0, jmae =0, jpai =0;
-		while( mae.genes.get(jmae) != null && pai.genes.get(jpai) != null)
+		while( jmae != mae.inovacao.size() && jpai != pai.inovacao.size())
 		{
 			if(mae.genes.get(jmae).getInovacao() == i && mae.genes.get(jmae).getEstado() && pai.genes.get(jpai).getInovacao() == i && pai.genes.get(jpai).getEstado())
 			{

@@ -11,6 +11,7 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	private double peso = Math.random()*400-2;
 	private boolean ativado = true;
 	private int inovacao = 0;
+	private int profundidade = 0;
 	
 	public Conexao( Nodulo n, Nodulo n0){
 		this.anterior = n;
@@ -39,13 +40,23 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	public int getInovacao(){
 		return this.inovacao;
 	}
+	
 	public void setInovacao( int novo){
 		this.inovacao = novo;
 	}
 	
-	public boolean getEstado( ){
+	public boolean getEstado(){
 		return this.ativado;
 	}
+	
+	public void setProfundidade( int novo){
+		this.profundidade = novo;
+	}
+	
+	public int getProfundidade(){
+		return this.profundidade;
+	}
+	
 	
 	//ALTERAR ESTADO
 	
@@ -59,4 +70,23 @@ public class Conexao implements java.io.Serializable, Cloneable{
 		this.posterior.setValor(this.anterior.getValor()*this.peso);
 	}
 	
+	
+	public Conexao copiar(){
+	    try {
+	        return ( Conexao) this.clone();
+	    } catch (final CloneNotSupportedException ex) {
+	        throw new AssertionError();
+	    }
+	}
+	
+	//FERRAMENTAS
+	
+	public void ajustaProfundidade(){
+		if( this.posterior != null)
+			return;
+		else{
+			this.profundidade++;
+			this.posterior.ajustaProfundidade();
+		}	
+	}
 }

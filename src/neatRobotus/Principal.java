@@ -1,8 +1,6 @@
 package neatRobotus;
 
 
-import neatRobotusInit.*;
-
 public class Principal {
 	public static void main(String Args[]){
 		BattleRunner batalha = new BattleRunner();
@@ -10,7 +8,7 @@ public class Principal {
 		do{
 			Populacao.genese();
 			batalha.startBatalha(false);
-		}while(Populacao.getGenoma().getFitness() <= 70 );
+		}while(Populacao.getGenoma().getFitness() <= 10 );
 		double[] r = Populacao.getGenoma().ativar(new double[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
 		System.out.println("Bom dia: "+r.length);
 		for(int i = 0; i < r.length; i++)

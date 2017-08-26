@@ -1,6 +1,4 @@
-package neatRobotusInit;
-
-import neatRobotus.*;
+package neatRobotus;
 
 import robocode.control.*;
 import robocode.control.events.*;
