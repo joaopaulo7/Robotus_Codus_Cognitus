@@ -1,5 +1,9 @@
 package neatRobotus;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
 
 public class Principal {
 	public static void main(String Args[]){
@@ -9,11 +13,21 @@ public class Principal {
 			Populacao.genese();
 			batalha.startBatalha(false);
 		}while(Populacao.getGenoma().getFitness() <= 10 );
-		double[] r = Populacao.getGenoma().ativar(new double[]{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
-		System.out.println("Bom dia: "+r.length);
-		for(int i = 0; i < r.length; i++)
-			System.out.println(r[i]+"\n");
-		batalha.startBatalha(true);
-		System.out.println("\nHello Nothingness: "+ Populacao.getGenoma().getFitness()+"\n"+Math.random());
+		Genoma genoma;
+	     try {
+	         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         genoma = (Genoma) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException i) {
+	         i.printStackTrace();
+	         return;
+	      }catch(ClassNotFoundException c) {
+	         System.out.println("Genoma não encontrado");
+	         c.printStackTrace();
+	         return;
+	      }
+	     genoma.mostrarGenoma();
 	}
 }

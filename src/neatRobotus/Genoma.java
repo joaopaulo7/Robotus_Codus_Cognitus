@@ -10,7 +10,7 @@ public class Genoma implements java.io.Serializable{
 	
 	
 	protected int fitness = 0;
-	protected ArrayList<int[]> inovacaoUni = new ArrayList<int[]>();
+	protected static ArrayList<int[]> inovacaoUni = new ArrayList<int[]>();
 	protected ArrayList<int[]> inovacao = new ArrayList<int[]>();
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
 	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();
@@ -61,8 +61,11 @@ public class Genoma implements java.io.Serializable{
 			this.outputs.add(new OutputAngular("Rotacionar radar para a direita"));
 			this.outputs.add(new OutputAngular("Rotacionar radar para a direita"));
 
+			
 			for(int i = 0; i< this.outputs.size(); i++)
 				this.nodulos.add(this.outputs.get(i));
+			for(int i = 0; i< this.nodulos.size(); i++)
+				this.nodulos.get(i).id = i;
 			
 			this.mutar(potencialMuta);
 	}
@@ -96,8 +99,6 @@ public class Genoma implements java.io.Serializable{
 				//cria a conexão
 				this.genes.add(new Conexao( n0, n1));
 				//atualiza a inovação
-				int v[] = {n0.getId(), n1.getId()};
-				this.inovacao.add(v);
 				this.addInov(n0.getId(), n1.getId());
 				//ajusta a profundidade
 				this.genes.get( this.genes.size()-1).setProfundidade(n0.getProfundidade());
@@ -165,20 +166,42 @@ public class Genoma implements java.io.Serializable{
 	private Nodulo adicionarNodulo( Conexao c){
 		Nodulo proximoNodulo = c.getPosterior();
 		Nodulo novoNodulo = new Nodulo();
+		novoNodulo.id = this.nodulos.size()+1;
 		c.setPosterior(novoNodulo);
+		//Adicionar 1ª conexao nas inovações
+		this.addInov(c.getAnterior().getId(), nodulos.size());
+		//Adicionar 2ª conexao nas inovações
+		this.addInov(novoNodulo.getId(), proximoNodulo.getId());
+		//Adicionar genes
 		genes.add(new Conexao( novoNodulo, proximoNodulo));
+		novoNodulo.ajustaProfundidade();
 		return novoNodulo;
 	}
 	
-	public void addInov(int n0, int n1){
-		System.out.println(this.inovacao.size());
-		for(int i = 0; i < this.inovacao.size()-1; i++){
-			if((this.inovacaoUni.get(i)[0] == n0) && (this.inovacaoUni.get(i)[1] == n1))
-				return;
+	public boolean addInov(int n0, int n1){
+		System.out.println(Genoma.inovacaoUni.size());
+		for(int i = 0; i < Genoma.inovacaoUni.size(); i++){
+			if((Genoma.inovacaoUni.get(i)[0] == n0) && (Genoma.inovacaoUni.get(i)[1] == n1))
+				return false;
 
 		}
 		int v[] = { n0, n1};
-		this.inovacaoUni.add(v);
+		this.inovacao.add(v);
+		Genoma.inovacaoUni.add(v);
+		return true;
 	}
 	
+	
+	
+	
+	
+//################DEBUG#####################
+	public void mostrarGenoma(){
+		for(int i = 0; i< this.nodulos.size(); i++){
+			System.out.println("::"+this.nodulos.get(i).id);
+		}
+		for(int i = 0; i< this.inovacao.size(); i++){
+			System.out.println((i)+"::"+this.inovacao.get(i)[0]+"-->"+this.inovacao.get(i)[1]);
+		}
+	}
 }

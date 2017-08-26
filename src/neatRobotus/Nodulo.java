@@ -51,16 +51,11 @@ public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que va
 	//#FERRAMENTAS#
 	
 	public void ajustaProfundidade( int profAnt){
-		if( this.posterior != null)
-			return;
-		else{
-			this.profundidade = profAnt+1;
-			this.posterior.ajustaProfundidade();
-		}	
+			this.posterior.ajustaProfundidade();	
 	}
 	
 	public void ajustaProfundidade(){
-		if( this.posterior != null)
+		if( this.posterior == null)
 			return;
 		else{
 			this.profundidade++;

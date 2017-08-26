@@ -82,10 +82,10 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	//FERRAMENTAS
 	
 	public void ajustaProfundidade(){
-		if( this.posterior != null)
+		if( this.posterior == null)
 			return;
 		else{
-			this.profundidade++;
+			//this.profundidade++;
 			this.posterior.ajustaProfundidade();
 		}	
 	}
