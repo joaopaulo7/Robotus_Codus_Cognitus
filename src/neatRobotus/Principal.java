@@ -13,6 +13,7 @@ public class Principal {
 			Populacao.genese();
 			batalha.startBatalha(false);
 		}while(Populacao.getGenoma().getFitness() <= 10 );
+
 		Genoma genoma;
 	     try {
 	         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
@@ -28,6 +29,8 @@ public class Principal {
 	         c.printStackTrace();
 	         return;
 	      }
+	     genoma.ativar( new double[] {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
 	     genoma.mostrarGenoma();
+	     batalha.startBatalha(true);
 	}
 }

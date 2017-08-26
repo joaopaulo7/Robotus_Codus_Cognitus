@@ -1,9 +1,7 @@
 package neatRobotus;
 
-public class Conexao implements java.io.Serializable, Cloneable{
-	/**
-	 * 
-	 */
+class Conexao implements java.io.Serializable, Cloneable{
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Nodulo anterior = null;
@@ -11,7 +9,6 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	private double peso = Math.random()*400-2;
 	private boolean ativado = true;
 	private int inovacao = 0;
-	private int profundidade = 0;
 	
 	public Conexao( Nodulo n, Nodulo n0){
 		this.anterior = n;
@@ -49,14 +46,6 @@ public class Conexao implements java.io.Serializable, Cloneable{
 		return this.ativado;
 	}
 	
-	public void setProfundidade( int novo){
-		this.profundidade = novo;
-	}
-	
-	public int getProfundidade(){
-		return this.profundidade;
-	}
-	
 	
 	//ALTERAR ESTADO
 	
@@ -66,8 +55,8 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	
 	//FUNCIONAR
 	
-	public void ativar(){
-		this.posterior.setValor(this.anterior.getValor()*this.peso);
+	public void ativar( double soma){
+		this.posterior.ativar(soma*this.peso);
 	}
 	
 	
@@ -81,12 +70,4 @@ public class Conexao implements java.io.Serializable, Cloneable{
 	
 	//FERRAMENTAS
 	
-	public void ajustaProfundidade(){
-		if( this.posterior == null)
-			return;
-		else{
-			//this.profundidade++;
-			this.posterior.ajustaProfundidade();
-		}	
-	}
 }

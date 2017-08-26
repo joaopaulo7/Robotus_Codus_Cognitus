@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
 	protected static int maxGenoma = 0;
-	protected static int geracao = 50;
+	protected static int geracao = 0;
 	
 	public static void novoGenoma(){
 		Populacao.genomas.add(new Genoma(1));
@@ -18,7 +18,8 @@ public class Populacao{
 	}
 	
 	public static void genese(){
-		if(Populacao.maxGenoma < 20){
+		if(Populacao.maxGenoma < 30)
+		{
 			Genoma g = new Genoma(geracao);
 			genomas.add(g);
 			Populacao.salvar(g);
@@ -26,7 +27,8 @@ public class Populacao{
 		}
 		else
 		{
-			//Populacao.selecionar();
+			Populacao.geracao++;
+			Populacao.selecionar();
 		}
 	}
 	
@@ -70,7 +72,8 @@ public class Populacao{
 	}
 	
 	protected static boolean salvar(Genoma g){
-		try {
+		try 
+		{
 			Genoma a = g;
 	         FileOutputStream fileOut = new FileOutputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -88,9 +91,36 @@ public class Populacao{
 	         System.out.printf("Objeto salvo(serializado) em: /home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"genoma"+genomas.size()+".ser");
 	         return true;
 		}
-		catch(IOException i) {
+		catch(IOException i)
+		{
 	         i.printStackTrace();
 	 		return false;
+		}
+	}
+	
+	protected static void selecionar(){
+		ArrayList<Genoma> perpetuados = new ArrayList<Genoma>();
+		Genoma g[] = new Genoma[10];
+		for(int i = 0; i < Populacao.genomas.size(); i++)
+		{
+			if( i < 10)
+				g[i] = genomas.get(i);
+			else
+			{
+				for( int j = 0; j < g.length; j++)
+				{
+					if(Populacao.genomas.get(i).fitness > g[j].fitness)
+						g[j] = Populacao.genomas.get(i);
+				}
+			}
+		}
+		for(int i = 0; i < 10; i++)
+		{
+			perpetuados.add(g[i]);
+		}
+		for(int i = 0; i < 20; i++)
+		{
+			perpetuados.add( new Genoma( Populacao.geracao));
 		}
 	}
 }

@@ -1,17 +1,15 @@
 package neatRobotus;
 
+import java.util.ArrayList;
+
 
 public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
 
 
 	
 	private static final long serialVersionUID = 1L;
-	private Conexao anterior = null;
-	private Conexao posterior = null;
-	protected int profundidade = 0;
+	protected ArrayList<Conexao> posterior = new ArrayList<Conexao>();
 	public int id = 0;
-	
-	protected double valor = 0.0;
 	
 	
 	public Nodulo copiar(){ //Copia o nódulo
@@ -24,49 +22,29 @@ public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que va
 	
 	
 	//GETS E SETS
-	public double getValor(){ //retorna o valor do nódulo
-		return this.valor;
+	
+	public void ativar( double soma){ //define o valor do nódulo
+		if( this.posterior.isEmpty()){
+			for( int i =0; i < this.posterior.size(); i++){
+				this.posterior.get(i).ativar( soma);
+			}
+		}
 	}
 	
-	public void setValor( double novoValor){ //define o valor do nódulo
-		this.valor = novoValor;
-	}
-	public Conexao getEntrada(){
-		return this.anterior;
-	}
-	public Conexao getSaida(){
-		return this.posterior;
-	}
-	public void setEntrada(Conexao nova){
-		this.anterior = nova;
-	}
-	public void setSaida( Conexao nova){
-		this.posterior = nova;
+	public Conexao getSaida( int i){
+		return this.posterior.get(i);
 	}
 	
-	public int getProfundidade(){
-		return this.profundidade;
+	public void addSaida( Conexao nova){
+		this.posterior.add(nova);
 	}
+	
 	
 	//#FERRAMENTAS#
-	
-	public void ajustaProfundidade( int profAnt){
-			this.posterior.ajustaProfundidade();	
-	}
-	
-	public void ajustaProfundidade(){
-		if( this.posterior == null)
-			return;
-		else{
-			this.profundidade++;
-			this.posterior.ajustaProfundidade();
-		}	
-	}
 	
 	public int getId(){
 		return this.id;
 	}
-	
 }
 
 //#INPUT#
@@ -93,13 +71,12 @@ class Input extends Nodulo{
 class Output extends Input{
 
 
-	private static final long serialVersionUID = 1L;
-	
-
-	public Output( String nome){
+	public Output(String nome) {
 		super(nome);
-		this.profundidade = 1;
 	}
+
+	private static final long serialVersionUID = 1L;
+	protected double valor = 0.0;
 	
 	public double calcularSaida(){ return 0.0; }
 }
@@ -116,7 +93,9 @@ class OutputAngular extends Output{
 	
 	public double calcularSaida()
 	{
-		return this.valor%360;
+		double valor = this.valor;
+		this.valor = 0.0;
+		return valor%360;
 	}
 }
 
@@ -131,9 +110,10 @@ class OutputBool extends Output{
 	
 	public double calcularSaida()
 	{
-		if( this.valor > 0)
+		if( this.valor > 0){
+			this.valor = 0;
 			return 1;
-		else
+		}else
 			return 0.0;
 	}
 }
@@ -149,6 +129,8 @@ class OutputShoot extends Output{
 		
 		public double calcularSaida()
 		{
+			double valor = this.valor;
+			this.valor = 0.0;
 			return valor%10;
 		}
 }
@@ -164,6 +146,8 @@ class OutputWalk extends Output{
 		
 		public double calcularSaida()
 		{
+			double valor = this.valor;
+			this.valor = 0.0;
 			return valor%100;
 		}
 }
