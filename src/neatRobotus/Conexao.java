@@ -6,7 +6,7 @@ class Conexao implements java.io.Serializable, Cloneable{
 	
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
-	private double peso = Math.random()*400-2;
+	private double peso = ((Math.random()*400)%200)-100;
 	private boolean ativado = true;
 	private int inovacao = 0;
 	
@@ -56,6 +56,7 @@ class Conexao implements java.io.Serializable, Cloneable{
 	//FUNCIONAR
 	
 	public void ativar( double soma){
+		System.out.println("gangnam");
 		this.posterior.ativar(soma*this.peso);
 	}
 	

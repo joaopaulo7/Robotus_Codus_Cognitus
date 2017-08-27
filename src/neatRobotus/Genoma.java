@@ -2,7 +2,7 @@ package neatRobotus;
 
 import java.util.ArrayList;
 
-public class Genoma implements java.io.Serializable{
+public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genoma> {
 	/**
 	 * 
 	 */
@@ -17,9 +17,9 @@ public class Genoma implements java.io.Serializable{
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
 	
 	
-	protected static double MUTAR_CONEXAO = 0.2;
-	protected static double MUTAR_NODULO = 0.3;
-	protected static double MUTAR_PESO = 0.5;
+	protected static double MUTAR_CONEXAO = 0.03;
+	protected static double MUTAR_NODULO = 0.01;
+	protected static double MUTAR_PESO = 0.8;
 	
 	//Inicialização dos Inputs e Outputs
 	public Genoma( int potencialMuta){
@@ -93,8 +93,9 @@ public class Genoma implements java.io.Serializable{
 		while(i <= potencial){
 			if( Math.random() < Genoma.MUTAR_CONEXAO){
 				//encontra 2 nódulos possíveis
-				Nodulo n0 = this.nodulos.get(this.noduloAleatorio( true));
-				Nodulo n1 = this.nodulos.get(this.noduloAleatorio( false));
+				int idAnt =this.noduloAleatorio( true, -1);
+				Nodulo n0 = this.nodulos.get(idAnt);
+				Nodulo n1 = this.nodulos.get(this.noduloAleatorio( false, idAnt));
 				//cria a conexão
 				Conexao c = new Conexao( n0, n1);
 				n0.addSaida(c);
@@ -105,11 +106,11 @@ public class Genoma implements java.io.Serializable{
 				System.out.println("Nova conexao");
 				i++;
 			}
-			else if( Math.random() < Genoma.MUTAR_NODULO && !genes.isEmpty()){
+			if( Math.random() < Genoma.MUTAR_NODULO && !genes.isEmpty()){
 				this.nodulos.add(this.adicionarNodulo(this.conexaoAleatoria()));
 				i++;
 			}
-			else if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
+			if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
 				this.genes.get(( int)(Math.random()*100)%this.genes.size());
 				i++;
 			}
@@ -128,16 +129,23 @@ public class Genoma implements java.io.Serializable{
 	}
 	
 	//Ferramentas
-	private int noduloAleatorio( boolean eAnt){
+	private int noduloAleatorio( boolean eAnt, int proibido){
 		int id = 0;
 		if(eAnt){
 				id = ( int)(Math.random()*100)%(this.nodulos.size()-10);
+				if(id >18 && id < 29)
+					id = id-10;
 				System.out.println("Tentando ant nod"+id);
 		}
 		else
 		{
+			while(true){
 				id = ( int)((Math.random()*100)%(this.nodulos.size()-19)+19);
-				System.out.println("Tentando prox nod"+id);
+				if(id != proibido){
+					System.out.println("Tentando prox nod"+id);
+					break;
+				}
+			}
 		}
 		return id;
 	}
@@ -180,6 +188,21 @@ public class Genoma implements java.io.Serializable{
 		this.genes.add(conexao);
 	}
 	
+	public Genoma copiar(){ //Copia o Gonoma
+	    try {
+	        return ( Genoma) this.clone();
+	    } catch (final CloneNotSupportedException ex) {
+	        throw new AssertionError();
+	    }
+	}
+	
+	public int compareTo(Genoma outro) {
+		if(this.fitness < outro.fitness)
+			return 1;
+		if(this.fitness > outro.fitness)
+			return -1;
+		return 0;
+	}
 	
 	
 //################DEBUG#####################
@@ -196,4 +219,5 @@ public class Genoma implements java.io.Serializable{
 			System.out.println((i)+":Universais:"+Genoma.inovacaoUni.get(i)[0]+"-->"+Genoma.inovacaoUni.get(i)[1]);
 		}
 	}
+
 }

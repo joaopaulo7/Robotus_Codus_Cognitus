@@ -9,8 +9,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 
-public class RobotusCodus extends AdvancedRobot {
+public class RobotusCodus extends AdvancedRobot{
 
+	Genoma genoma;
 	
 		public void run() {
 			// Set colors
@@ -19,7 +20,6 @@ public class RobotusCodus extends AdvancedRobot {
 			setRadarColor(new Color(200, 200, 70));
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
-			Genoma genoma;
 		     try {
 		         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -42,7 +42,31 @@ public class RobotusCodus extends AdvancedRobot {
 		}
 		public void onScannedRobot(ScannedRobotEvent roboto){
 			
+			double v[] = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getOthers(),
+					getRadarHeading(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	roboto.getBearing(),
+				 	roboto.getDistance(),
+				 	roboto.getEnergy(),
+				 	roboto.getHeading(),
+				 	roboto.getVelocity()
+				};
+			this.agir(genoma.ativar(v));
 		}
+		
+		
 		
 		protected double[] estadoNormal(){
 			double v[] = {
@@ -74,7 +98,8 @@ public class RobotusCodus extends AdvancedRobot {
 			back( r[1]);
 			if( r[2] == 1)
 				doNothing();
-			fire( r[3]);
+			if( r[3] > 0)
+				fire( r[3]);
 			turnLeft( r[4]);
 			turnRight( r[5]);
 			turnGunLeft( r[6]);

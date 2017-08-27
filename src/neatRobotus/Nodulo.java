@@ -24,8 +24,9 @@ public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que va
 	//GETS E SETS
 	
 	public void ativar( double soma){ //define o valor do nódulo
-		if( this.posterior.isEmpty()){
+		if( !this.posterior.isEmpty()){
 			for( int i =0; i < this.posterior.size(); i++){
+				System.out.println("opa");
 				this.posterior.get(i).ativar( soma);
 			}
 		}
@@ -78,7 +79,11 @@ class Output extends Input{
 	private static final long serialVersionUID = 1L;
 	protected double valor = 0.0;
 	
-	public double calcularSaida(){ return 0.0; }
+	public void ativar( double soma){
+		this.valor = soma;
+	}
+	
+	public double calcularSaida(){ return this.valor; }
 }
 
 //Os outputs são diferênciados pela formatação da saída.
@@ -111,7 +116,7 @@ class OutputBool extends Output{
 	public double calcularSaida()
 	{
 		if( this.valor > 0){
-			this.valor = 0;
+			this.valor = 0.0;
 			return 1;
 		}else
 			return 0.0;
@@ -131,7 +136,7 @@ class OutputShoot extends Output{
 		{
 			double valor = this.valor;
 			this.valor = 0.0;
-			return valor%10;
+			return valor%5;
 		}
 }
 

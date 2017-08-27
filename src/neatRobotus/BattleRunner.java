@@ -23,7 +23,7 @@ public class BattleRunner {
 
         int numberOfRounds = 10;
         BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
-        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*,sample.Corners");
+        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*,sampleex.Alien");
 
         BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
 
@@ -55,7 +55,7 @@ class BattleObserver extends BattleAdaptor {
         for( int i = 0; i < 2; i++)
         {
         	if(robs[i].getTeamLeaderName().equals("neatRobotus.RobotusCodus*"))
-        		this.genoma.setFitness(robs[i].getScore());
+        		this.genoma.setFitness( (int) (robs[i].getScore()*3-robs[0].getScore()));
         }
     }
     
