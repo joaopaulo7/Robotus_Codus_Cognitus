@@ -156,3 +156,17 @@ class OutputWalk extends Output{
 			return valor%100;
 		}
 }
+class Bias extends Input{
+ 
+	public Bias(String nome) {
+		super(nome);
+	}
+	private static final long serialVersionUID = 1L;
+	
+	public void mutarAleatorio(){
+		int rand = ( int) (Math.random()*200)%this.posterior.size();
+		this.posterior.get(rand).mutarPeso();
+	}
+	
+
+}

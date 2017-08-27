@@ -36,7 +36,27 @@ public class RobotusCodus extends AdvancedRobot{
 		      }
 			// Loop forever
 			while (true) {
-					double[] r = genoma.ativar(this.estadoNormal());
+					double[] r = {
+							getBattleFieldHeight(),
+							getBattleFieldWidth(),
+							getEnergy(),
+							getGunCoolingRate(),
+							getGunHeading(),
+							getGunHeat(),
+							getHeading(),
+							getHeight(),
+							getOthers(),
+							getRadarHeading(),
+							getVelocity(),
+							getWidth(),
+							getX(),
+						 	getY(),
+						 	0,
+						 	0,
+						 	0,
+						 	0,
+						 	0
+						};
 					this.agir(r);
 			}
 		}
@@ -66,32 +86,6 @@ public class RobotusCodus extends AdvancedRobot{
 			this.agir(genoma.ativar(v));
 		}
 		
-		
-		
-		protected double[] estadoNormal(){
-			double v[] = {
-					getBattleFieldHeight(),
-					getBattleFieldWidth(),
-					getEnergy(),
-					getGunCoolingRate(),
-					getGunHeading(),
-					getGunHeat(),
-					getHeading(),
-					getHeight(),
-					getOthers(),
-					getRadarHeading(),
-					getVelocity(),
-					getWidth(),
-					getX(),
-				 	getY(),
-				 	0,
-				 	0,
-				 	0,
-				 	0,
-				 	0
-				};
-			return 	v; 
-		}
 		
 		protected void agir( double[] r){
 			ahead( r[0]);

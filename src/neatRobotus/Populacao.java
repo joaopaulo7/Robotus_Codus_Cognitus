@@ -66,7 +66,7 @@ public class Populacao{
 							filho.add(mae.genes.get(i));
 							i++;
 						}
-						else if( mae.genes.get(i).getInovacao() > pai.genes.get(j).getInovacao())
+						else
 						{
 							filho.add(pai.genes.get(j));
 							j++;

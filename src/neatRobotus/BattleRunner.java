@@ -39,8 +39,6 @@ public class BattleRunner {
 // Our private battle listener for handling the battle event we are interested in.
 //
 class BattleObserver extends BattleAdaptor {
-	
-	private Genoma genoma = Populacao.getGenoma();
 
     // Called when the battle is completed successfully with battle results
     public void onBattleCompleted(BattleCompletedEvent e) {
@@ -51,14 +49,7 @@ class BattleObserver extends BattleAdaptor {
         for (robocode.BattleResults result : e.getSortedResults()) {
         		System.out.println("  " + result.getTeamLeaderName() + ": " + result.getScore());
         }
-        robocode.BattleResults robs[] = e.getSortedResults();
-        for( int i = 0; i < 2; i++)
-        {
-        	if(robs[i].getTeamLeaderName().equals("neatRobotus.RobotusCodus*"))
-        		this.genoma.setFitness( (int) (robs[i].getScore()*2-robs[0].getScore()+robs[0].getSurvival()));
-        }
-        if(robs[0].getTeamLeaderName().equals("neatRobotus.RobotusCodus*"))
-        	this.genoma.setFitness(100000);
+        Principal.evento = e.getSortedResults();
     }
     
     // Called when the game sends out an information message during the battle
@@ -71,7 +62,4 @@ class BattleObserver extends BattleAdaptor {
         System.out.println("Err> " + e.getError());
     }
     
-    public void setGenoma( Genoma genoma){
-    	this.genoma = genoma;
-    }
 }
