@@ -15,6 +15,12 @@ class Conexao implements java.io.Serializable, Cloneable{
 		this.posterior = n0;
 	}
 	
+	public Conexao( Nodulo n, Nodulo n0, double peso){
+		this.anterior = n;
+		this.posterior = n0;
+		this.peso = peso;
+	}
+	
 	
 	//GETS E SETS
 	public Nodulo getAnterior(){
@@ -32,6 +38,9 @@ class Conexao implements java.io.Serializable, Cloneable{
 	}
 	public void setPeso( double novo){
 		this.peso = novo;
+	}
+	public double getPeso( ){
+		return this.peso;
 	}
 	
 	public int getInovacao(){

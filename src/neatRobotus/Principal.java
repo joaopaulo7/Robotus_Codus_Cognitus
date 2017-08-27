@@ -13,37 +13,21 @@ public class Principal {
 		s = new Scanner(System.in);
 		BattleRunner batalha = new BattleRunner();
 		Populacao.populacaoInit();
-		int count = 0;
-		boolean ver;
 		do{
-			count++;
 			Populacao.genese();
-
 			batalha.startBatalha(false);
 			//if( count == 24)
 				//Populacao.debug();
-		}while(Populacao.getGenoma().getFitness() <= 200);
-		Genoma genoma;
-	    try {
-	         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
-	         ObjectInputStream in = new ObjectInputStream(fileIn);
-	         genoma = (Genoma) in.readObject();
-	         in.close();
-	         fileIn.close();
-	     }catch(IOException i) {
-	         i.printStackTrace();
-	         return;
-	     }catch(ClassNotFoundException c) {
-	         System.out.println("Genoma não encontrado");
-	         c.printStackTrace();
-	         return;
-	     }
-	    
-	    double r[] = genoma.ativar( new double[] {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
-	    for( int i = 0; i < 10; i++)
-	    	System.out.println(r[i]);
-	    genoma.mostrarGenoma();
-	    batalha.startBatalha(true);
-		s.nextInt();
+		}while(Populacao.getGenoma().getFitness() <= 10000);
+		Genoma genoma0 = new Genoma(1);
+		Genoma genoma1 = new Genoma(10);
+		double r[] = genoma0.ativar( new double[] {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1});
+		for( int i = 0; i < 10; i++)
+			System.out.println(r[i]);
+		genoma0.mostrarGenoma();
+		genoma1.mostrarGenoma();
+		Populacao.crossOver( genoma1, genoma0).mostrarGenoma();
+	    //batalha.startBatalha(true);
+		//s.nextInt();
 	}
 }

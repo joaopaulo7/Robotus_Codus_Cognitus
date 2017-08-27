@@ -12,7 +12,7 @@ public class Populacao{
 	protected static int maxGenoma = -1;
 	protected static int geracao = 0;
 	
-	private static int TAMANHO_GERACAO = 24;
+	private static int TAMANHO_GERACAO = 12;
 	private static Scanner s;
 	
 	
@@ -39,43 +39,59 @@ public class Populacao{
 		}
 	}
 	
-	private static Genoma crossOver( Genoma mae, Genoma pai){
-		ArrayList<int[]> inovacaoFilho = new ArrayList<int[]>();
-		int i = 0, jmae =0, jpai =0;
-		while( jmae != mae.inovacao.size() && jpai != pai.inovacao.size())
+	public static Genoma crossOver( Genoma mae, Genoma pai){
+		int i = 0, j = 0;
+		ArrayList<Conexao> filho = new ArrayList<Conexao>();
+		if( pai.genes. isEmpty())
 		{
-			if(mae.genes.get(jmae).getInovacao() == i && mae.genes.get(jmae).getEstado() && pai.genes.get(jpai).getInovacao() == i && pai.genes.get(jpai).getEstado())
+			filho = mae.genes;
+		}
+		else if( mae.genes.isEmpty())
+		{
+			filho = pai.genes;
+		}
+		else
+		{
+			while( i < mae.genes.size() || j < pai.genes.size())
 			{
-				if(Math.random() > 0.5)
-					genes.add(mae.genes.get(i));
-				else{
-					genes.add(pai.genes.get(i));
-					i++;
-					jmae++;
-					jpai++;
+				if(( i < mae.genes.size() && j < pai.genes.size())){
+						if(mae.genes.get(i).getInovacao() == pai.genes.get(j).getInovacao())
+						{
+							filho.add(mae.genes.get(i));
+							i++;
+							j++;
+						}
+						else if(  mae.genes.get(i).getInovacao() < pai.genes.get(j).getInovacao())
+						{
+							filho.add(mae.genes.get(i));
+							i++;
+						}
+						else if( mae.genes.get(i).getInovacao() > pai.genes.get(j).getInovacao())
+						{
+							filho.add(pai.genes.get(j));
+							j++;
+						}
+				}
+				else
+				{
+					if( j == pai.genes.size())
+					{
+						filho.add(mae.genes.get(i));
+						i++;
+					}
+					else{
+						filho.add(pai.genes.get(j));
+						j++;
+					}
 				}
 			}
-			else if(mae.genes.get(jmae).getInovacao() == i && !mae.genes.get(jmae).getEstado())
-			{
-				genes.add(mae.genes.get(i));
-				i++;
-				jmae++;
-			}
-			else if(pai.genes.get(jpai).getInovacao() == i)
-			{
-				genes.add(pai.genes.get(i));
-				i++;
-				jmae++;
-			}
-			else
-				i++;
 		}
-		Genoma filho;
-		if(mae.nodulos.size() < pai.nodulos.size())
-			filho = new Genoma( genes, pai.nodulos);
+		int nodulos;
+		if( mae.nodulos.size() > pai.nodulos.size())
+			nodulos = mae.nodulos.size();
 		else
-			filho = new Genoma( genes, mae.nodulos);
-		return filho;
+			nodulos = pai.nodulos.size();
+		return Genoma.montarGenoma( filho, nodulos);
 	}
 	
 	protected static boolean salvar(Genoma g){
@@ -107,24 +123,34 @@ public class Populacao{
 	protected static void selecionar(){
 		s = new Scanner(System.in); 
 		ArrayList<Genoma> perpetuados = new ArrayList<Genoma>();
-		Genoma g[] = new Genoma[TAMANHO_GERACAO/3];
+		Genoma g[] = new Genoma[TAMANHO_GERACAO/2];
 		
 		Collections.sort(Populacao.genomas);
 		
-		for(int i = 0; i < Populacao.TAMANHO_GERACAO/3; i++)
+		for(int i = 0; i < Populacao.TAMANHO_GERACAO/2; i++)
 		{
 			g[i] = Populacao.genomas.get(i);
 		}
-		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
+		
+		for(int i = 0; i < TAMANHO_GERACAO/2; i++)
 		{
 			perpetuados.add(g[i]);
 		}
-		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
-		{
-			perpetuados.add( new Genoma( Populacao.geracao));
+
+		while( perpetuados.size()-1 < 3*TAMANHO_GERACAO/4){
+			Genoma g0 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/2)];
+			Genoma g1 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/2)];
+			if( g0.getFitness() > g1.getFitness())
+			{
+				perpetuados.add( Populacao.crossOver( g0, g1));
+			}
+			else if( g0 != g1)
+			{
+				perpetuados.add( Populacao.crossOver( g1, g0));
+			}
 		}
 		
-		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
+		for(int i = 0; i < TAMANHO_GERACAO/4; i++)
 		{
 			Genoma copia = g[1].copiar();
 			copia.mutar( 1);
