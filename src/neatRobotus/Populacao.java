@@ -12,7 +12,7 @@ public class Populacao{
 	protected static int maxGenoma = -1;
 	protected static int geracao = 0;
 	
-	private static int TAMANHO_GERACAO = 160;
+	private static int TAMANHO_GERACAO = 360;
 	private static Scanner s;
 	
 	

@@ -65,7 +65,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 			for(int i = 0; i< this.nodulos.size(); i++){
 				this.nodulos.get(i).id = i;
 				if(i > 17)
-					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i), 0));
+					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i)));
 			}
 			
 			this.mutar(potencialMuta);
@@ -95,12 +95,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Gets e Sets
 	public void setFitness( double fit){
 		this.numFit++;
-		this.fitness += fit;
+		this.fitness = fit;
 	}
 	
 	public double getFitness()
 	{
-		return this.fitness/this.numFit;
+		return this.fitness;
 	}
 	
 	//Mutações

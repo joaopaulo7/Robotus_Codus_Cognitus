@@ -87,7 +87,7 @@ public class RobotusCodus extends AdvancedRobot{
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] == 1)
-				doNothing();
+				//doNothing();
 			if( r[3] > 0)
 				fire( r[3]);
 			turnLeft( r[4]);
