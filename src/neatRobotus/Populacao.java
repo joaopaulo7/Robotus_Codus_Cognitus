@@ -88,12 +88,10 @@ public class Populacao{
 				}
 			}
 		}
-		int nodulos;
 		if( mae.nodulos.size() > pai.nodulos.size())
-			nodulos = mae.nodulos.size();
+			return Genoma.montarGenoma( filho, mae.nodulos.size(), mae.bias);
 		else
-			nodulos = pai.nodulos.size();
-		return Genoma.montarGenoma( filho, nodulos);
+			return Genoma.montarGenoma( filho, pai.nodulos.size(), pai.bias);
 	}
 	
 	protected static boolean salvar(Genoma g){
@@ -163,7 +161,7 @@ public class Populacao{
 	
 	public static double setFitness( int fitBrut){
 		Genoma testado = Populacao.getGenoma();
-		int maxNod, tamEsp = 0;
+		int maxNod, tamEsp = 1;
 		for( int i = 0; i < Populacao.genomas.size(); i++){
 			maxNod = testado.nodulos.size() - 29;
 			if( Populacao.genomas.get(i).nodulos.size() > maxNod)

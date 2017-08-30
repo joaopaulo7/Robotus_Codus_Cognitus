@@ -19,7 +19,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
 	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
-	protected int count = 1;
 	
 	protected double MUTAR_CONEXAO = 0.2;
 	protected double MUTAR_NODULO = 0.05;
@@ -76,7 +75,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 			this.mutar(potencialMuta);
 	}
 	
-	public static Genoma montarGenoma( ArrayList<Conexao> conexoes, int numNodulos)
+	public static Genoma montarGenoma( ArrayList<Conexao> conexoes, int numNodulos, Bias bias)
 	{
 		Genoma homun = new Genoma(-1);
 		for( int i = 29; i < numNodulos; i++)
@@ -84,6 +83,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 			homun.nodulos.add( new Nodulo());
 			homun.nodulos.get(i).id = homun.nodulos.size()-1;
 		}
+		for( int i = 19; i < numNodulos-1; i++)
+				homun.bias.addSaida( new Conexao(homun.bias, homun.nodulos.get(i), bias.posterior.get(i-19).getPeso()));
 		int j = 0;
 		while( j < conexoes.size())
 		{
@@ -97,13 +98,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Gets e Sets
 	public void setFitness( int fit){
-		this.fitness += fit;
-		this.count++;
+		this.fitness = fit;
 	}
 	
 	public int getFitness()
 	{
-		return this.fitness/this.count;
+		return this.fitness;
 	}
 	
 	//Mutações
