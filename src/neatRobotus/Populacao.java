@@ -12,7 +12,7 @@ public class Populacao{
 	protected static int maxGenoma = -1;
 	protected static int geracao = 0;
 	
-	private static int TAMANHO_GERACAO = 60;
+	private static int TAMANHO_GERACAO = 160;
 	private static Scanner s;
 	
 	
@@ -123,51 +123,53 @@ public class Populacao{
 	protected static void selecionar(){
 		s = new Scanner(System.in); 
 		ArrayList<Genoma> perpetuados = new ArrayList<Genoma>();
-		Genoma g[] = new Genoma[TAMANHO_GERACAO/2];
+		Genoma g[] = new Genoma[TAMANHO_GERACAO/3];
 		
 		Collections.sort(Populacao.genomas);
 		
-		for(int i = 0; i < Populacao.TAMANHO_GERACAO/2; i++)
+		for(int i = 0; i < Populacao.TAMANHO_GERACAO/3; i++)
 		{
 			g[i] = Populacao.genomas.get(i);
 		}
 		
-		for(int i = 0; i < TAMANHO_GERACAO/2; i++)
+		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
 		{
 			perpetuados.add(g[i]);
 		}
 
-		while( perpetuados.size()-1 < 3*TAMANHO_GERACAO/4){
-			Genoma g0 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/2)];
-			Genoma g1 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/2)];
-			if( g0.getFitness() > g1.getFitness())
+		while( perpetuados.size()-1 < 2*TAMANHO_GERACAO/3){
+			Genoma g0 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/3)];
+			Genoma g1 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/3)];
+			if( Especie.mesmaEspecie(g0.inovacao, g1.inovacao, g0.nodulos.size()) == 1 && g0.getFitness() > g1.getFitness())
 			{
 				perpetuados.add( Populacao.crossOver( g0, g1));
 			}
-			else if( g0 != g1)
+			else if( Especie.mesmaEspecie(g0.inovacao, g1.inovacao, g1.nodulos.size()) == 1)
 			{
 				perpetuados.add( Populacao.crossOver( g1, g0));
 			}
 		}
 		
-		for(int i = 0; i < TAMANHO_GERACAO/4; i++)
+		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
 		{
-			Genoma copia = g[1].copiar();
+			Genoma copia = g[i].copiar();
 			copia.mutar( 1);
 			perpetuados.add(copia);
 		}
 		Populacao.genomas = perpetuados;
 	}
 	
-	public static double setFitness( int fitBrut){
+	public static double setFitness( double fitBrut){
 		Genoma testado = Populacao.getGenoma();
 		int maxNod, tamEsp = 1;
+		System.out.println("CONTADOR");
 		for( int i = 0; i < Populacao.genomas.size(); i++){
-			maxNod = testado.nodulos.size() - 29;
+			maxNod = testado.nodulos.size() - 25;
 			if( Populacao.genomas.get(i).nodulos.size() > maxNod)
-				maxNod = Populacao.genomas.get(i).nodulos.size() - 29;
+				maxNod = Populacao.genomas.get(i).nodulos.size() - 25;
 			tamEsp += Especie.mesmaEspecie( testado.inovacao, Populacao.genomas.get(i).inovacao, maxNod);
 		}
+		System.out.println("DIVISAO");
 		if( tamEsp == 1)
 			Especie.numEspecies++;
 		testado.setFitness( fitBrut/tamEsp);

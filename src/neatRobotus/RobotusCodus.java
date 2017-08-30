@@ -45,8 +45,6 @@ public class RobotusCodus extends AdvancedRobot{
 							getGunHeat(),
 							getHeading(),
 							getHeight(),
-							getOthers(),
-							getRadarHeading(),
 							getVelocity(),
 							getWidth(),
 							getX(),
@@ -71,8 +69,6 @@ public class RobotusCodus extends AdvancedRobot{
 					getGunHeat(),
 					getHeading(),
 					getHeight(),
-					getOthers(),
-					getRadarHeading(),
 					getVelocity(),
 					getWidth(),
 					getX(),
@@ -98,8 +94,6 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[5]);
 			turnGunLeft( r[6]);
 			turnGunRight( r[7]);
-			turnRadarLeft( r[8]);
-			turnRadarRight( r[9]);
 		}
 
 }
