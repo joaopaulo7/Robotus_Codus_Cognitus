@@ -1,6 +1,6 @@
 package neatRobotus;
 
-class Conexao implements java.io.Serializable, Cloneable, Comparable<Conexao>{
+class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -41,6 +41,10 @@ class Conexao implements java.io.Serializable, Cloneable, Comparable<Conexao>{
 		this.peso =	((Math.random()*400)%200)-100;
 	}
 	
+	public double getPeso(){
+		return this.peso;
+	}
+	
 	public int getInovacao(){
 		return this.inovacao;
 	}
@@ -63,17 +67,7 @@ class Conexao implements java.io.Serializable, Cloneable, Comparable<Conexao>{
 	//FUNCIONAR
 	
 	public void ativar( double soma){
-		System.out.println("gangnam");
 		this.posterior.ativar(soma*this.peso);
-	}
-	
-	
-	public Conexao copiar(){
-	    try {
-	        return ( Conexao) this.clone();
-	    } catch (final CloneNotSupportedException ex) {
-	        throw new AssertionError();
-	    }
 	}
 
 	public int compareTo(Conexao outra) {

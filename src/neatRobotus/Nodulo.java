@@ -3,32 +3,24 @@ package neatRobotus;
 import java.util.ArrayList;
 
 
-public class Nodulo implements java.io.Serializable, Cloneable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
+public class Nodulo implements java.io.Serializable{ //Unidade que vai armazenar os valores entre conexões(sinapses).
 
 
 	
 	private static final long serialVersionUID = 1L;
 	protected ArrayList<Conexao> posterior = new ArrayList<Conexao>();
 	public int id = 0;
-	
-	
-	public Nodulo copiar(){ //Copia o nódulo
-	    try {
-	        return ( Nodulo) this.clone();
-	    } catch (final CloneNotSupportedException ex) {
-	        throw new AssertionError();
-	    }
-	}
-	
+	private boolean ativado = false;
 	
 	//GETS E SETS
 	
 	public void ativar( double soma){ //define o valor do nódulo
-		if( !this.posterior.isEmpty()){
+		if( !this.posterior.isEmpty() && !ativado){
+			ativado = true;
 			for( int i =0; i < this.posterior.size(); i++){
-				System.out.println("opa");
 				this.posterior.get(i).ativar( soma);
 			}
+			ativado = false;
 		}
 	}
 	

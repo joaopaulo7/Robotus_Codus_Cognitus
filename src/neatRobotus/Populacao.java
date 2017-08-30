@@ -12,7 +12,7 @@ public class Populacao{
 	protected static int maxGenoma = -1;
 	protected static int geracao = 0;
 	
-	private static int TAMANHO_GERACAO = 12;
+	private static int TAMANHO_GERACAO = 60;
 	private static Scanner s;
 	
 	
@@ -20,6 +20,7 @@ public class Populacao{
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
 			Populacao.genomas.add(new Genoma(1));
 	}
+	
 	public static Genoma getGenoma(){
 		return Populacao.genomas.get(Populacao.maxGenoma);
 	}
@@ -36,6 +37,7 @@ public class Populacao{
 			Populacao.geracao++;
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
+			Especie.numEspecies = 0;
 		}
 	}
 	
@@ -159,12 +161,27 @@ public class Populacao{
 		Populacao.genomas = perpetuados;
 	}
 	
+	public static double setFitness( int fitBrut){
+		Genoma testado = Populacao.getGenoma();
+		int maxNod, tamEsp = 0;
+		for( int i = 0; i < Populacao.genomas.size(); i++){
+			maxNod = testado.nodulos.size() - 29;
+			if( Populacao.genomas.get(i).nodulos.size() > maxNod)
+				maxNod = Populacao.genomas.get(i).nodulos.size() - 29;
+			tamEsp += Especie.mesmaEspecie( testado.inovacao, Populacao.genomas.get(i).inovacao, maxNod);
+		}
+		if( tamEsp == 1)
+			Especie.numEspecies++;
+		testado.setFitness( fitBrut/tamEsp);
+		return fitBrut/tamEsp;
+	}
+	
 	public static void debug(){
 		s = new Scanner(System.in);
 		/* DEBUG*/
 		for(int i = 0; i < Populacao.genomas.size(); i++)
 		{
-			System.out.println(Populacao.genomas.get(i).fitness);
+			System.out.println(Populacao.genomas.get(i).getFitness());
 		}
 		s.nextInt();
 	}
