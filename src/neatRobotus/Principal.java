@@ -15,39 +15,15 @@ public class Principal {
 	
 	public static void main(String Args[]){
 		s = new Scanner(System.in);
-		Populacao.populacaoInit();
+		//Populacao.populacaoInit();
 		BattleRunner batalha = new BattleRunner();
 		int maxFit = 0, count = 0, numGenes, numNod;
 		double maxFitEq = 0,  sumFit = 0, sumFitEq =0;
 		Genoma genoma;
 		do{
-			Populacao.genese();
+			//Populacao.genese();
 			
-			
-		     try {
-		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
-		         ObjectInputStream in = new ObjectInputStream(fileIn);
-		         genoma = (Genoma) in.readObject();
-		         in.close();
-		         fileIn.close();
-		      }catch(IOException i) {
-		         i.printStackTrace();
-		         return;
-		      }catch(ClassNotFoundException c) {
-		         System.out.println("Genoma não encontrado");
-		         c.printStackTrace();
-		         return;
-		      }
-			
-			
-			double v[] = new double[17];
-			for(int i = 0; i < 17; i++)
-				v[i]= 1;
-			double r[] = genoma.ativar(v);
-			for(int i = 0; i < 7; i++)
-				System.out.println(r[i]);
-			
-			batalha.startBatalha(false);
+			batalha.startBatalha(true);
 			numGenes = Populacao.getGenoma().genes.size();
 			numNod = Populacao.getGenoma().nodulos.size();
 			if( evento[0].getTeamLeaderName() == "neatRobotus.RobotusCodus*")

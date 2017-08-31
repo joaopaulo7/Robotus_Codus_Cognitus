@@ -11,7 +11,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	
 	private double fitness = 0;
-	private int numFit = 0;
 	
 	protected Bias bias = new Bias(" Bias");
 	protected static ArrayList<int[]> inovacaoUni = new ArrayList<int[]>();
@@ -93,13 +92,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Gets e Sets
 	public void setFitness( double fit){
-		this.numFit++;
-		this.fitness += fit;
+		this.fitness = fit;
 	}
 	
 	public double getFitness()
 	{
-		return this.fitness/this.numFit;
+		return this.fitness;
 	}
 	
 	//Mutações
@@ -112,7 +110,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 				int idAnt = this.noduloAleatorio( true, -1);
 				int idPos = this.noduloAleatorio( false, idAnt);
 				if( this.existe( idAnt, idPos)){
-					this.adicionarConexao(idAnt, idPos, ((Math.random()*40)%40)-20);
+					this.adicionarConexao(idAnt, idPos, ((Math.random()*200)%200)-100);
 					i++;
 				}
 			}
@@ -231,7 +229,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	    try {
 	        Genoma g =( Genoma) this.clone();
 	        g.fitness = 0;
-	        g.numFit = 0;
 	        return g;
 	    } catch (final CloneNotSupportedException ex) {
 	        throw new AssertionError();
