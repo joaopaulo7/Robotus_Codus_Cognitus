@@ -38,7 +38,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	}
 	
 	public void mutarPeso(){
-		this.peso +=((Math.random()*40)%40)-20;
+		this.peso =((Math.random()*40)%40)-20;
 	}
 	
 	public double getPeso(){

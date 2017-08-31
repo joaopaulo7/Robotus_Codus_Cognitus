@@ -1,6 +1,11 @@
 package neatRobotus;
 
 import robocode.AdvancedRobot;
+import robocode.BulletHitBulletEvent;
+import robocode.BulletHitEvent;
+import robocode.HitByBulletEvent;
+import robocode.HitRobotEvent;
+import robocode.HitWallEvent;
 import robocode.ScannedRobotEvent;
 
 import java.awt.*;
@@ -21,7 +26,7 @@ public class RobotusCodus extends AdvancedRobot{
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
 		     try {
-		         FileInputStream fileIn = new FileInputStream("/home/joao/workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         genoma = (Genoma) in.readObject();
 		         in.close();
@@ -36,7 +41,9 @@ public class RobotusCodus extends AdvancedRobot{
 		      }
 			// Loop forever
 			while (true) {
-					double[] r = {
+				ahead(10);
+				System.out.println("kill me");
+					double[] v = {
 							getBattleFieldHeight(),
 							getBattleFieldWidth(),
 							getEnergy(),
@@ -55,9 +62,177 @@ public class RobotusCodus extends AdvancedRobot{
 						 	0,
 						 	0
 						};
-					this.agir(r);
+					double r[] = genoma.ativar(v);
+					doNothing();
+					ahead( r[0]);
+					back( r[1]);
+					if( r[2] > 0)
+						fire( r[2]);
+					turnLeft( r[3]);
+					turnRight( r[4]);
+					turnGunLeft( r[5]);
+					turnGunRight( r[6]);
 			}
 		}
+		
+		public void onBulletHit( BulletHitEvent e){
+			double[] v = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
+				 	0
+				};
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
+		}
+		
+		public void onBulletHitBullet( BulletHitBulletEvent e){
+			double[] v = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
+				 	0
+				};
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
+	}
+		
+		public void onHitByBullet( HitByBulletEvent e){
+			double[] v = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
+				 	0
+				};
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
+	}
+		public void onHitRobot( HitRobotEvent e){
+			double[] v = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
+				 	0
+				};
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
+	}
+		public void onHitWall( HitWallEvent e){
+			double[] v = {
+					getBattleFieldHeight(),
+					getBattleFieldWidth(),
+					getEnergy(),
+					getGunCoolingRate(),
+					getGunHeading(),
+					getGunHeat(),
+					getHeading(),
+					getHeight(),
+					getVelocity(),
+					getWidth(),
+					getX(),
+				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
+				 	0
+				};
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
+	}
+		
 		public void onScannedRobot(ScannedRobotEvent roboto){
 			
 			double v[] = {
@@ -79,11 +254,21 @@ public class RobotusCodus extends AdvancedRobot{
 				 	roboto.getHeading(),
 				 	roboto.getVelocity()
 				};
-			this.agir(genoma.ativar(v));
+			double r[] = genoma.ativar(v);
+			doNothing();
+			ahead( r[0]);
+			back( r[1]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
 		}
 		
 		
-		protected void agir( double[] r){
+		public void agir( double[] r){
+			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)

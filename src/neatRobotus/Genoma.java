@@ -64,7 +64,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 			for(int i = 0; i< this.nodulos.size(); i++){
 				this.nodulos.get(i).id = i;
 				if(i > 17)
-					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i)));
+					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i), 0));
 			}
 			
 			this.mutar(potencialMuta);
@@ -105,7 +105,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Mutações
 	public void mutar( int potencial){
 		int i = 0;
-		while(i <= potencial){
+		while(i < potencial){
 			if( Math.random() < this.MUTAR_CONEXAO || genes.isEmpty()){
 				//this.MUTAR_CONEXAO *= 0.7;
 				//encontra 2 nódulos possíveis
@@ -173,7 +173,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 		//Adicionar 1ª conexao nas inovações
 		c.setInovacao(this.addInov(c.getAnterior().getId(), novoNodulo.getId(), c.getPeso()));
 		//adiciona a conexao do BIAS ao novo nódulo
-		this.bias.addSaida( new Conexao( this.bias, novoNodulo));
+		this.bias.addSaida( new Conexao( this.bias, novoNodulo, 0));
 	}
 	
 	private void adicionarConexao( int idAnt, int idPos, double peso){
