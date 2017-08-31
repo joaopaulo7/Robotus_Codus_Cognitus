@@ -63,7 +63,6 @@ public class RobotusCodus extends AdvancedRobot{
 						 	0
 						};
 					double r[] = genoma.ativar(v);
-					doNothing();
 					ahead( r[0]);
 					back( r[1]);
 					if( r[2] > 0)
@@ -96,7 +95,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -128,7 +126,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -160,7 +157,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -191,7 +187,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -222,7 +217,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -255,7 +249,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	roboto.getVelocity()
 				};
 			double r[] = genoma.ativar(v);
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
@@ -268,7 +261,6 @@ public class RobotusCodus extends AdvancedRobot{
 		
 		
 		public void agir( double[] r){
-			doNothing();
 			ahead( r[0]);
 			back( r[1]);
 			if( r[2] > 0)
