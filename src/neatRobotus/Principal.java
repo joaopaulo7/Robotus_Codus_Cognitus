@@ -21,7 +21,6 @@ public class Principal {
 		double maxFitEq = 0,  sumFit = 0, sumFitEq =0;
 		do{
 			Populacao.genese();
-			//Populacao.getGenoma().mostrarGenoma();
 			batalha.startBatalha(false);
 			numGenes = Populacao.getGenoma().genes.size();
 			numNod = Populacao.getGenoma().nodulos.size();

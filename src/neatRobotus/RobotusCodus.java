@@ -86,14 +86,12 @@ public class RobotusCodus extends AdvancedRobot{
 		protected void agir( double[] r){
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] == 1)
-				//doNothing();
-			if( r[3] > 0)
-				fire( r[3]);
-			turnLeft( r[4]);
-			turnRight( r[5]);
-			turnGunLeft( r[6]);
-			turnGunRight( r[7]);
+			if( r[2] > 0)
+				fire( r[2]);
+			turnLeft( r[3]);
+			turnRight( r[4]);
+			turnGunLeft( r[5]);
+			turnGunRight( r[6]);
 		}
 
 }

@@ -156,7 +156,7 @@ class Bias extends Input{
 	private static final long serialVersionUID = 1L;
 	
 	public void mutarAleatorio(){
-		int rand = ( int) (Math.random()*200)%this.posterior.size();
+		int rand = ( int) (Math.random()*1000)%this.posterior.size();
 		this.posterior.get(rand).mutarPeso();
 	}
 	

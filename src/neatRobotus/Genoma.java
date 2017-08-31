@@ -52,7 +52,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 		//Declaração de Outputs
 			this.outputs.add(new OutputWalk("Andar para frente"));
 			this.outputs.add(new OutputWalk("Andar para trás"));
-			this.outputs.add(new OutputBool("Não fazer nada"));
 			this.outputs.add(new OutputShoot("Atirar"));
 			this.outputs.add(new OutputAngular("Rotacionar robô a esquerda"));
 			this.outputs.add(new OutputAngular("Rotacionar robô para a direita"));
@@ -74,7 +73,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	public static Genoma montarGenoma( ArrayList<Conexao> conexoes, int numNodulos, Bias bias)
 	{
 		Genoma homun = new Genoma(-1);
-		for( int i = 25; i < numNodulos; i++)
+		for( int i = 24; i < numNodulos; i++)
 		{
 			homun.nodulos.add( new Nodulo());
 			homun.nodulos.get(i).id = homun.nodulos.size()-1;
@@ -95,12 +94,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Gets e Sets
 	public void setFitness( double fit){
 		this.numFit++;
-		this.fitness = fit;
+		this.fitness += fit;
 	}
 	
 	public double getFitness()
 	{
-		return this.fitness;
+		return this.fitness/this.numFit;
 	}
 	
 	//Mutações
@@ -113,7 +112,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 				int idAnt = this.noduloAleatorio( true, -1);
 				int idPos = this.noduloAleatorio( false, idAnt);
 				if( this.existe( idAnt, idPos)){
-					this.adicionarConexao(idAnt, idPos, ((Math.random()*400)%200)-100);
+					this.adicionarConexao(idAnt, idPos, ((Math.random()*40)%40)-20);
 					i++;
 				}
 			}
@@ -132,7 +131,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Ativação da rede
 	public double[] ativar( double v[]){
-		double g[] = new double[10];
+		double g[] = new double[7];
 		this.bias.ativar(1);
 		for( int i = 0; i < v.length; i++)
 			this.nodulos.get(i).ativar(v[i]);
@@ -145,14 +144,14 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	private int noduloAleatorio( boolean eAnt, int proibido){
 		int id = ( int)(( Math.random()*10000)%( this.nodulos.size()));
 		if(eAnt){
-				if(id >16 && id < 25)
+				if(id >16 && id < 24)
 					id -=10;
 				System.out.println("Tentando ant nod"+id);
 		}
 		else
 		{
 			while(id == proibido || id < 17){
-				id = ( int)(( Math.random()*10000)%( this.nodulos.size()-19)+19);
+				id = ( int)(( Math.random()*10000)%( this.nodulos.size()-17)+17);
 					System.out.println("Tentando prox nod"+id);
 			}
 		}
@@ -240,9 +239,9 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	}
 	
 	public int compareTo(Genoma outro) {
-		if(this.fitness < outro.fitness)
+		if(this.getFitness() < outro.getFitness())
 			return 1;
-		if(this.fitness > outro.fitness)
+		if(this.getFitness() > outro.getFitness())
 			return -1;
 		return 0;
 	}

@@ -38,6 +38,7 @@ public class Populacao{
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
 			Especie.numEspecies = 0;
+			Populacao.salvar(Populacao.genomas);
 		}
 	}
 	
@@ -112,6 +113,24 @@ public class Populacao{
 	         fileOut.close();
 	         System.out.printf("Objeto salvo(serializado) em: /home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"genoma"+genomas.size()+".ser");
 	         */return true;
+		}
+		catch(IOException i)
+		{
+	         i.printStackTrace();
+	 		return false;
+		}
+	}
+	
+	protected static boolean salvar(ArrayList<Genoma> g){
+		try 
+		{
+	         FileOutputStream fileOut = new FileOutputStream("/home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+".ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(g);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Objeto salvo(serializado) em: /home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"genoma"+genomas.size()+".ser");
+	         return true;
 		}
 		catch(IOException i)
 		{
