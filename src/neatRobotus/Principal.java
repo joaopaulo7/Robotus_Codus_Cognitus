@@ -15,15 +15,15 @@ public class Principal {
 	
 	public static void main(String Args[]){
 		s = new Scanner(System.in);
-		//Populacao.populacaoInit();
+		Populacao.populacaoInit();
 		BattleRunner batalha = new BattleRunner();
 		int maxFit = 0, count = 0, numGenes, numNod;
 		double maxFitEq = 0,  sumFit = 0, sumFitEq =0;
 		Genoma genoma;
 		do{
-			//Populacao.genese();
+			Populacao.genese();
 			
-			batalha.startBatalha(true);
+			batalha.startBatalha(false);
 			numGenes = Populacao.getGenoma().genes.size();
 			numNod = Populacao.getGenoma().nodulos.size();
 			if( evento[0].getTeamLeaderName() == "neatRobotus.RobotusCodus*")

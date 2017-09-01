@@ -41,7 +41,6 @@ public class RobotusCodus extends AdvancedRobot{
 		      }
 			// Loop forever
 			while (true) {
-				ahead(10);
 				System.out.println("kill me");
 					double[] v = {
 							getBattleFieldHeight(),
