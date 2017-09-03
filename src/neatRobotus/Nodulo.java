@@ -128,7 +128,7 @@ class OutputShoot extends Output{
 		{
 			double valor = this.valor;
 			this.valor = 0.0;
-			return Math.abs(valor%5);
+			return Math.abs(valor%3);
 		}
 }
 
@@ -145,7 +145,7 @@ class OutputWalk extends Output{
 		{
 			double valor = this.valor;
 			this.valor = 0.0;
-			return Math.abs(valor%100);
+			return Math.abs(valor%200);
 		}
 }
 class Bias extends Input{

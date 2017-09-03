@@ -1,7 +1,9 @@
 package neatRobotus;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,37 +11,70 @@ import java.util.Scanner;
 
 public class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
-	protected static int maxGenoma = -1;
+	protected static int maxGenoma = 0;
 	protected static int geracao = 0;
 	
-	private static int TAMANHO_GERACAO = 160;
+	public static double medFit = 0;
+	private static double atMedFit = 0;
+	private static int numStatic = 0;
+	private static int TAMANHO_GERACAO = 360;
 	private static Scanner s;
 	
 	
 	public static void populacaoInit(){
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
-			Populacao.genomas.add(new Genoma(1));
+			Populacao.genomas.add(new Genoma(6));
+		Especie.formarEspecies( Populacao.genomas);
+	}
+	
+	public static void populacaoInit( int i) {
+	     try {
+	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+i+".ser");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         Populacao.genomas = (ArrayList<Genoma>) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException e) {
+	         e.printStackTrace();
+	         return;
+	      }catch(ClassNotFoundException c) {
+	         System.out.println("Genoma não encontrado");
+	         c.printStackTrace();
+	         return;
+	      }
+	     Populacao.geracao = i;
+	     Collections.sort(genomas);
 	}
 	
 	public static Genoma getGenoma(){
-		return Populacao.genomas.get(Populacao.maxGenoma);
+		return Populacao.genomas.get(genomas.size()-1 );
 	}
 	
 	public static void genese(){
-		if(Populacao.maxGenoma < TAMANHO_GERACAO-1)
+		if(Populacao.maxGenoma < TAMANHO_GERACAO)
 		{
-			Populacao.maxGenoma++;
 			Genoma g = genomas.get(Populacao.maxGenoma);
 			Populacao.salvar(g);
 		}
 		else
 		{
-			Populacao.geracao++;
+			Populacao.numStatic++;
+			if( atMedFit > medFit) {
+				Populacao.numStatic = 0;
+				Populacao.medFit = Populacao.atMedFit;
+			}
+			Populacao.atMedFit = 0;
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
-			Especie.numEspecies = 0;
 			Populacao.salvar(Populacao.genomas);
+			Populacao.geracao++;
 		}
+	}
+	
+	public static void setFitness( double fit){
+		Populacao.maxGenoma++;
+		Populacao.getGenoma().setFitness(fit);
+		Populacao.atMedFit += Populacao.getGenoma().getFitness()/Populacao.TAMANHO_GERACAO;
 	}
 	
 	public static Genoma crossOver( Genoma mae, Genoma pai){
@@ -104,15 +139,7 @@ public class Populacao{
 	         out.close();
 	         fileOut.close();
 	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
-	         
-	         
-	        /* fileOut = new FileOutputStream("/home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"/genoma"+(genomas.size()-1)+".ser");
-	         out = new ObjectOutputStream(fileOut);
-	         out.writeObject(g);
-	         out.close();
-	         fileOut.close();
-	         System.out.printf("Objeto salvo(serializado) em: /home/joao/workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"genoma"+genomas.size()+".ser");
-	         */return true;
+	         return true;
 		}
 		catch(IOException i)
 		{
@@ -129,7 +156,7 @@ public class Populacao{
 	         out.writeObject(g);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+"genoma"+genomas.size()+".ser");
+	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+".ser");
 	         return true;
 		}
 		catch(IOException i)
@@ -157,13 +184,13 @@ public class Populacao{
 		}
 
 		while( perpetuados.size()-1 < 2*TAMANHO_GERACAO/3){
-			Genoma g0 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/3)];
-			Genoma g1 = g[(int) ((Math.random()*100)%TAMANHO_GERACAO/3)];
-			if( Especie.mesmaEspecie(g0.inovacao, g1.inovacao, g0.nodulos.size()) == 1 && g0.getFitness() > g1.getFitness())
+			Genoma g0 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
+			Genoma g1 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
+			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness()) || Populacao.numStatic > 20)
 			{
 				perpetuados.add( Populacao.crossOver( g0, g1));
 			}
-			else if( Especie.mesmaEspecie(g0.inovacao, g1.inovacao, g1.nodulos.size()) == 1)
+			else if( g0.especie == g1.especie || Populacao.numStatic > 20)
 			{
 				perpetuados.add( Populacao.crossOver( g1, g0));
 			}
@@ -172,28 +199,13 @@ public class Populacao{
 		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
 		{
 			Genoma copia = g[i].copiar();
-			copia.mutar( 1);
+			copia.mutar( 1+ (( int)Populacao.numStatic/5));
 			perpetuados.add(copia);
 		}
+		Especie.formarEspecies( perpetuados);
 		Populacao.genomas = perpetuados;
 	}
-	
-	public static double setFitness( double fitBrut){
-		Genoma testado = Populacao.getGenoma();
-		int maxNod, tamEsp = 1;
-		System.out.println("CONTADOR");
-		for( int i = 0; i < Populacao.genomas.size(); i++){
-			maxNod = testado.nodulos.size() - 25;
-			if( Populacao.genomas.get(i).nodulos.size() > maxNod)
-				maxNod = Populacao.genomas.get(i).nodulos.size() - 25;
-			tamEsp += Especie.mesmaEspecie( testado.inovacao, Populacao.genomas.get(i).inovacao, maxNod);
-		}
-		System.out.println("DIVISAO");
-		if( tamEsp == 1)
-			Especie.numEspecies++;
-		testado.setFitness( fitBrut/tamEsp);
-		return fitBrut/tamEsp;
-	}
+
 	
 	public static void debug(){
 		s = new Scanner(System.in);

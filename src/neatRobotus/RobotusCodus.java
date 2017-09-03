@@ -1,7 +1,6 @@
 package neatRobotus;
 
 import robocode.AdvancedRobot;
-import robocode.BulletHitBulletEvent;
 import robocode.BulletHitEvent;
 import robocode.HitByBulletEvent;
 import robocode.HitRobotEvent;
@@ -17,14 +16,15 @@ import java.io.ObjectInputStream;
 public class RobotusCodus extends AdvancedRobot{
 
 	Genoma genoma;
-	
+	int fit = 0;
 		public void run() {
 			// Set colors
-			setBodyColor(new Color(128, 128, 50));
+			setBodyColor(Color.black);
 			setGunColor(new Color(50, 50, 20));
-			setRadarColor(new Color(200, 200, 70));
+			setRadarColor(Color.red);
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
+		   // setAdjustGunForRobotTurn(true);
 		     try {
 		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -40,41 +40,56 @@ public class RobotusCodus extends AdvancedRobot{
 		         return;
 		      }
 			// Loop forever
-			while (true) {
 				System.out.println("kill me");
-					double[] v = {
-							getBattleFieldHeight(),
-							getBattleFieldWidth(),
-							getEnergy(),
-							getGunCoolingRate(),
-							getGunHeading(),
-							getGunHeat(),
-							getHeading(),
-							getHeight(),
-							getVelocity(),
-							getWidth(),
-							getX(),
-						 	getY(),
-						 	0,
-						 	0,
-						 	0,
-						 	0,
-						 	0
-						};
-					double r[] = genoma.ativar(v);
-					ahead( r[0]);
-					back( r[1]);
-					if( r[2] > 0)
-						fire( r[2]);
-					turnLeft( r[3]);
-					turnRight( r[4]);
-					turnGunLeft( r[5]);
-					turnGunRight( r[6]);
+				while(true) {
+							double v[] = {
+									getBattleFieldHeight(),
+									getBattleFieldWidth(),
+									getEnergy(),
+									getGunCoolingRate(),
+									getGunHeading(),
+									getGunHeat(),
+									getHeading(),
+									getHeight(),
+									getVelocity(),
+									getWidth(),
+									getX(),
+								 	getY(),
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0,
+								 	0
+								};
+							double r[] = genoma.ativar(v);
+							ahead( r[0]);
+							back( r[1]);
+							if( r[2] > 0)
+								fire( r[2]);
+							turnLeft( r[3]);
+							turnRight( r[4]);
+							turnGunLeft( r[5]);
+							turnGunRight( r[6]);
+							if(r[7] == 1)
+								doNothing();
+							if(r[8] == 1)
+								stop();
+							if(r[9] == 1)
+								resume();
+
 			}
 		}
 		
 		public void onBulletHit( BulletHitEvent e){
-			double[] v = {
+			double v[] = {
 					getBattleFieldHeight(),
 					getBattleFieldWidth(),
 					getEnergy(),
@@ -87,6 +102,10 @@ public class RobotusCodus extends AdvancedRobot{
 					getWidth(),
 					getX(),
 				 	getY(),
+				 	1,
+				 	0,
+				 	0,
+				 	0,
 				 	0,
 				 	0,
 				 	0,
@@ -102,41 +121,16 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if(r[7] == 1)
+				doNothing();
+			if(r[8] == 1)
+				stop();
+			if(r[9] == 1)
+				resume();
 		}
 		
-		public void onBulletHitBullet( BulletHitBulletEvent e){
-			double[] v = {
-					getBattleFieldHeight(),
-					getBattleFieldWidth(),
-					getEnergy(),
-					getGunCoolingRate(),
-					getGunHeading(),
-					getGunHeat(),
-					getHeading(),
-					getHeight(),
-					getVelocity(),
-					getWidth(),
-					getX(),
-				 	getY(),
-				 	0,
-				 	0,
-				 	0,
-				 	0,
-				 	0
-				};
-			double r[] = genoma.ativar(v);
-			ahead( r[0]);
-			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
-			turnLeft( r[3]);
-			turnRight( r[4]);
-			turnGunLeft( r[5]);
-			turnGunRight( r[6]);
-	}
-		
 		public void onHitByBullet( HitByBulletEvent e){
-			double[] v = {
+			double v[] = {
 					getBattleFieldHeight(),
 					getBattleFieldWidth(),
 					getEnergy(),
@@ -149,6 +143,10 @@ public class RobotusCodus extends AdvancedRobot{
 					getWidth(),
 					getX(),
 				 	getY(),
+				 	0,
+				 	1,
+				 	0,
+				 	0,
 				 	0,
 				 	0,
 				 	0,
@@ -164,9 +162,15 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if(r[7] == 1)
+				doNothing();
+			if(r[8] == 1)
+				stop();
+			if(r[9] == 1)
+				resume();
 	}
 		public void onHitRobot( HitRobotEvent e){
-			double[] v = {
+			double v[] = {
 					getBattleFieldHeight(),
 					getBattleFieldWidth(),
 					getEnergy(),
@@ -179,6 +183,10 @@ public class RobotusCodus extends AdvancedRobot{
 					getWidth(),
 					getX(),
 				 	getY(),
+				 	0,
+				 	0,
+				 	1,
+				 	0,
 				 	0,
 				 	0,
 				 	0,
@@ -194,9 +202,15 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if(r[7] == 1)
+				doNothing();
+			if(r[8] == 1)
+				stop();
+			if(r[9] == 1)
+				resume();
 	}
 		public void onHitWall( HitWallEvent e){
-			double[] v = {
+			double v[] = {
 					getBattleFieldHeight(),
 					getBattleFieldWidth(),
 					getEnergy(),
@@ -212,6 +226,10 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0,
 				 	0,
+				 	1,
+				 	0,
+				 	0,
+				 	0,
 				 	0,
 				 	0
 				};
@@ -224,6 +242,12 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if(r[7] == 1)
+				doNothing();
+			if(r[8] == 1)
+				stop();
+			if(r[9] == 1)
+				resume();
 	}
 		
 		public void onScannedRobot(ScannedRobotEvent roboto){
@@ -241,9 +265,12 @@ public class RobotusCodus extends AdvancedRobot{
 					getWidth(),
 					getX(),
 				 	getY(),
+				 	0,
+				 	0,
+				 	0,
+				 	0,
 				 	roboto.getBearing(),
 				 	roboto.getDistance(),
-				 	roboto.getEnergy(),
 				 	roboto.getHeading(),
 				 	roboto.getVelocity()
 				};
@@ -256,18 +283,15 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if(r[7] == 1)
+				doNothing();
+			if(r[8] == 1)
+				stop();
+			if(r[9] == 1)
+				resume();
+			
+			if( getEnergy() == 0) {
+				this.fit = -100;
+			}
 		}
-		
-		
-		public void agir( double[] r){
-			ahead( r[0]);
-			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
-			turnLeft( r[3]);
-			turnRight( r[4]);
-			turnGunLeft( r[5]);
-			turnGunRight( r[6]);
-		}
-
 }

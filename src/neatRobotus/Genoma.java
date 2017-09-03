@@ -18,10 +18,14 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
 	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
+	protected int especie = -1;
 	
 	protected double MUTAR_CONEXAO = 0.12;
 	protected double MUTAR_NODULO = 0.04;
 	protected static double MUTAR_PESO = 1;
+	protected int NUM_INPUT = 0;
+	protected int NUM_OUTPUT = 0;
+	protected int NUM_NODULOSBASE = 0;
 	
 	//Criacao de genomas
 	public Genoma( int potencialMuta){
@@ -39,11 +43,14 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 				this.nodulos.add(new Input("Posiçao do robô"));
 				this.nodulos.add(new Input("Posição X em que o robô está"));
 				this.nodulos.add(new Input("Posição Y em que o robô está"));
-				
-			//Relacionado a outros robôs
+				//
+				this.nodulos.add(new Input("Atingiu um tiro"));
+				this.nodulos.add(new Input("Foi atingido"));
+				this.nodulos.add(new Input("Bateu em outro Robô"));
+				this.nodulos.add(new Input("Bateu na parede"));
+				//
 				this.nodulos.add(new Input("Direção do robô scaneado"));
 				this.nodulos.add(new Input("Distânciado robô scaneado"));
-				this.nodulos.add(new Input("Energia do robô scaneado"));
 				this.nodulos.add(new Input("Angulo do robô scaneado"));
 				this.nodulos.add(new Input("Velociade do robô scaneado"));
 				
@@ -56,9 +63,16 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 			this.outputs.add(new OutputAngular("Rotacionar robô para a direita"));
 			this.outputs.add(new OutputAngular("Rotacionar arma para a esquerda"));
 			this.outputs.add(new OutputAngular("Rotacionar arma para a direita"));
+			this.outputs.add(new OutputBool("Não fazer nada"));
+			this.outputs.add(new OutputBool("Parar"));
+			this.outputs.add(new OutputBool("Voltar"));
+			
+			this.NUM_INPUT = this.nodulos.size();
+			this.NUM_OUTPUT = this.outputs.size();
+			this.NUM_NODULOSBASE = this.NUM_INPUT + this.NUM_OUTPUT;
 
 			
-			for(int i = 0; i< this.outputs.size(); i++)
+			for(int i = 0; i< this.outputs.size(); i++) 
 				this.nodulos.add(this.outputs.get(i));
 			for(int i = 0; i< this.nodulos.size(); i++){
 				this.nodulos.get(i).id = i;
@@ -72,13 +86,13 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	public static Genoma montarGenoma( ArrayList<Conexao> conexoes, int numNodulos, Bias bias)
 	{
 		Genoma homun = new Genoma(-1);
-		for( int i = 24; i < numNodulos; i++)
+		for( int i = homun.NUM_NODULOSBASE; i < numNodulos; i++)
 		{
 			homun.nodulos.add( new Nodulo());
 			homun.nodulos.get(i).id = homun.nodulos.size()-1;
 		}
-		for( int i = 17; i < numNodulos-1; i++)
-				homun.bias.addSaida( new Conexao(homun.bias, homun.nodulos.get(i), bias.posterior.get(i-17).getPeso()));
+		for( int i = homun.NUM_INPUT; i < numNodulos-1; i++)
+				homun.bias.addSaida( new Conexao(homun.bias, homun.nodulos.get(i), bias.posterior.get(i-homun.NUM_INPUT).getPeso()));
 		int j = 0;
 		while( j < conexoes.size())
 		{
@@ -92,7 +106,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Gets e Sets
 	public void setFitness( double fit){
-		this.fitness = fit;
+		//this.numFit++;
+		this.fitness = fit/Especie.especies[this.especie];
 	}
 	
 	public double getFitness()
@@ -103,6 +118,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Mutações
 	public void mutar( int potencial){
 		int i = 0;
+		potencial += ( ( int) this.genes.size()/7);
 		while(i < potencial){
 			if( Math.random() < this.MUTAR_CONEXAO || genes.isEmpty()){
 				//this.MUTAR_CONEXAO *= 0.7;
@@ -114,12 +130,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 					i++;
 				}
 			}
-			else if( Math.random() < this.MUTAR_NODULO && !genes.isEmpty()){
+			if( Math.random() < this.MUTAR_NODULO && !genes.isEmpty()){
 				//this.MUTAR_NODULO *= 0.7;
 				this.adicionarNodulo(this.conexaoAleatoria());
 				i++;
 			}
-			else if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
+			if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
 				this.mutarPeso();
 				i++;
 			}
@@ -129,11 +145,11 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Ativação da rede
 	public double[] ativar( double v[]){
-		double g[] = new double[7];
+		double g[] = new double[this.NUM_OUTPUT];
 		this.bias.ativar(1);
-		for( int i = 0; i < v.length; i++)
+		for( int i = 0; i < this.NUM_INPUT; i++)
 			this.nodulos.get(i).ativar(v[i]);
-		for( int i = 0; i < outputs.size(); i++)
+		for( int i = 0; i < this.NUM_OUTPUT; i++)
 			g[i] = this.outputs.get(i).calcularSaida();
 		return g;
 	}
@@ -142,14 +158,14 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	private int noduloAleatorio( boolean eAnt, int proibido){
 		int id = ( int)(( Math.random()*10000)%( this.nodulos.size()));
 		if(eAnt){
-				if(id >16 && id < 24)
-					id -=10;
+				if(id >this.NUM_INPUT && id < this.NUM_NODULOSBASE)
+					id -= this.NUM_OUTPUT;
 				System.out.println("Tentando ant nod"+id);
 		}
 		else
 		{
-			while(id == proibido || id < 17){
-				id = ( int)(( Math.random()*10000)%( this.nodulos.size()-17)+17);
+			while(id == proibido || id < this.NUM_INPUT){
+				id = ( int)(( Math.random()*10000)%( this.nodulos.size()- this.NUM_INPUT)+ this.NUM_INPUT);
 					System.out.println("Tentando prox nod"+id);
 			}
 		}
@@ -213,7 +229,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	}
 	
 	public void mutarPeso(){
-		int id  = ( int)(( Math.random()*10000)%( this.genes.size()+this.nodulos.size()-10));
+		int id  = ( int)(( Math.random()*10000)%( this.genes.size()+this.nodulos.size()-this.NUM_INPUT));
 		if( id >= this.genes.size())
 		{
 			this.bias.mutarAleatorio();
