@@ -17,7 +17,7 @@ public class Populacao{
 	public static double medFit = 0;
 	private static double atMedFit = 0;
 	private static int numStatic = 0;
-	private static int TAMANHO_GERACAO = 360;
+	private static int TAMANHO_GERACAO = 240;
 	private static Scanner s;
 	
 	
@@ -47,7 +47,7 @@ public class Populacao{
 	}
 	
 	public static Genoma getGenoma(){
-		return Populacao.genomas.get(genomas.size()-1 );
+		return Populacao.genomas.get( Populacao.maxGenoma -1);
 	}
 	
 	public static void genese(){
@@ -72,9 +72,9 @@ public class Populacao{
 	}
 	
 	public static void setFitness( double fit){
+		Populacao.genomas.get(Populacao.maxGenoma).setFitness(fit);
+		Populacao.atMedFit += Populacao.genomas.get(Populacao.maxGenoma).getFitness()/Populacao.TAMANHO_GERACAO;
 		Populacao.maxGenoma++;
-		Populacao.getGenoma().setFitness(fit);
-		Populacao.atMedFit += Populacao.getGenoma().getFitness()/Populacao.TAMANHO_GERACAO;
 	}
 	
 	public static Genoma crossOver( Genoma mae, Genoma pai){
@@ -183,7 +183,7 @@ public class Populacao{
 			perpetuados.add(g[i]);
 		}
 
-		while( perpetuados.size()-1 < 2*TAMANHO_GERACAO/3){
+		while( perpetuados.size() < 2*TAMANHO_GERACAO/3){
 			Genoma g0 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
 			Genoma g1 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
 			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness()) || Populacao.numStatic > 20)

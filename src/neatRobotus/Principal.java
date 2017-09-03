@@ -25,9 +25,6 @@ public class Principal {
 			Populacao.genese();
 			batalha.startBatalha( false);
 			
-			numGenes = Populacao.getGenoma().genes.size();
-			numNod = Populacao.getGenoma().nodulos.size();
-			
 			if( evento[0].getTeamLeaderName() == "neatRobotus.RobotusCodus*")
 				break;
 			
@@ -38,13 +35,17 @@ public class Principal {
 			
 			Populacao.setFitness( evento[1].getScore());
 			
+			
+			numGenes = Populacao.getGenoma().genes.size();
+			numNod = Populacao.getGenoma().nodulos.size();
+			
 			double fit = Populacao.getGenoma().getFitness();
 			sumFitEq += fit;
 			
 			if( fit > maxFitEq)
 				maxFitEq = fit;
 			
-			System.out.println( "\n|Testes: " +count +" |Geração: " +Populacao.geracao +" |Testes na geração: "+ count%360 +"\n|genes: " +numGenes+"|Nódulos: " +numNod +"\n|Especies:" +Especie.numEspc+"\n|Maior fitness:"+ maxFit +" |Fitness Médio: "+ sumFit/count+" |Fitness atual: " +evento[1].getScore()+"\n|Maior fitness especializado:"+ maxFitEq +" |Fitness Especializado Médio: " +Populacao.medFit+" |Especializado atual: "+fit);
+			System.out.println( "\n|Testes: " +count +" |Geração: " +Populacao.geracao +" |Testes na geração: "+ count%240 +"\n|genes: " +numGenes+"|Nódulos: " +numNod +"\n|Especies:" +Especie.numEspc+"\n|Maior fitness:"+ maxFit +" |Fitness Médio: "+ sumFit/count+" |Fitness atual: " +evento[1].getScore()+"\n|Maior fitness especializado:"+ maxFitEq +" |Fitness Especializado Médio: " +Populacao.medFit+" |Especializado atual: "+fit);
 			
 			count++;
 		}while(true);

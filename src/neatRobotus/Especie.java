@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Especie {
 	
 	protected static int numEspc = 0;
-	public static int especies[] = new int[90000];
+	public static int especies[] = new int[240];
 	private static double c0 = 1, c1 = 1, c2 = 0.4, constEspec = 3;
 	
 	
@@ -17,6 +17,8 @@ public class Especie {
 		
 		for(int i = 0; i < lista.size(); i++)
 			lista.get(i).especie = -1;
+		
+		System.out.println(lista.size());
 		
 		while( j < lista.size()) {
 			Especie.especies[j] = 0;
