@@ -188,11 +188,11 @@ public class Populacao{
 		while( perpetuados.size() < 2*TAMANHO_GERACAO/3){
 			Genoma g0 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
 			Genoma g1 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
-			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness()) || Populacao.numStatic > 20)
+			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness()))
 			{
 				perpetuados.add( Populacao.crossOver( g0, g1));
 			}
-			else if( g0.especie == g1.especie || Populacao.numStatic > 20)
+			else if( g0.especie == g1.especie)
 			{
 				perpetuados.add( Populacao.crossOver( g1, g0));
 			}

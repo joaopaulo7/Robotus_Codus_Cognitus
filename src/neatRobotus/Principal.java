@@ -45,7 +45,7 @@ public class Principal {
 			if( fit > maxFitEq)
 				maxFitEq = fit;
 			
-			System.out.println( "\n|Testes: " +count +" |Geração: " +Populacao.geracao +" |Testes na geração: "+ count%240 +"\n|genes: " +numGenes+"|Nódulos: " +numNod +"\n|Especies:" +Especie.numEspc+"\n|Maior fitness:"+ maxFit +" |Fitness Médio: "+ sumFit/count+" |Fitness atual: " +evento[1].getScore()+"\n|Maior fitness especializado:"+ maxFitEq +" |Fitness Especializado Médio: " +Populacao.medFit+" |Especializado atual: "+fit);
+			System.out.println( "\n|Testes: " +count +" |Geração: " +Populacao.geracao +" |Testes na geração: "+ count%300 +"\n|genes: " +numGenes+"|Nódulos: " +numNod +"\n|Especies:" +Especie.numEspc+"\n|Maior fitness:"+ maxFit +" |Fitness Médio: "+ sumFit/count+" |Fitness atual: " +evento[1].getScore()+"\n|Maior fitness especializado:"+ maxFitEq +" |Fitness Especializado Médio: " +Populacao.medFit+" |Especializado atual: "+fit);
 			
 			count++;
 		}while(true);
