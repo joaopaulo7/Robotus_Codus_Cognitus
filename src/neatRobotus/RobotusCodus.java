@@ -72,8 +72,6 @@ public class RobotusCodus extends AdvancedRobot{
 							double r[] = genoma.ativar(v);
 							ahead( r[0]);
 							back( r[1]);
-							if( r[2] > 0)
-								fire( r[2]);
 							turnLeft( r[3]);
 							turnRight( r[4]);
 							turnGunLeft( r[5]);
@@ -236,8 +234,6 @@ public class RobotusCodus extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
@@ -277,12 +273,12 @@ public class RobotusCodus extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
+			if( r[2] > 0)
+				fire( r[2]);
 			if(r[7] == 1)
 				doNothing();
 			if(r[8] == 1)

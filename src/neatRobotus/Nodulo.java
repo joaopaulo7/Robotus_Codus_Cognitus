@@ -92,7 +92,7 @@ class OutputAngular extends Output{
 	{
 		double valor = this.valor;
 		this.valor = 0.0;
-		return valor%360;
+		return valor%180;
 	}
 }
 
@@ -110,8 +110,10 @@ class OutputBool extends Output{
 		if( this.valor > 0){
 			this.valor = 0.0;
 			return 1;
-		}else
+		}else {
+			this.valor = 0.0;
 			return 0.0;
+		}
 	}
 }
 
@@ -128,7 +130,7 @@ class OutputShoot extends Output{
 		{
 			double valor = this.valor;
 			this.valor = 0.0;
-			return Math.abs(valor%3);
+			return valor%3;
 		}
 }
 

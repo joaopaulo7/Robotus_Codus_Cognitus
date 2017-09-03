@@ -17,13 +17,14 @@ public class Populacao{
 	public static double medFit = 0;
 	private static double atMedFit = 0;
 	private static int numStatic = 0;
-	private static int TAMANHO_GERACAO = 240;
+	
+	private static int TAMANHO_GERACAO = 300;
 	private static Scanner s;
 	
 	
 	public static void populacaoInit(){
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
-			Populacao.genomas.add(new Genoma(6));
+			Populacao.genomas.add(new Genoma(1));
 		Especie.formarEspecies( Populacao.genomas);
 	}
 	
@@ -43,6 +44,7 @@ public class Populacao{
 	         return;
 	      }
 	     Populacao.geracao = i;
+	     Especie.formarEspecies( Populacao.genomas);
 	     Collections.sort(genomas);
 	}
 	

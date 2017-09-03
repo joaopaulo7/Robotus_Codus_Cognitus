@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Especie {
 	
 	protected static int numEspc = 0;
-	public static int especies[] = new int[240];
+	public static int especies[] = new int[300];
 	private static double c0 = 1, c1 = 1, c2 = 0.4, constEspec = 3;
 	
 	
@@ -30,12 +30,10 @@ public class Especie {
 				double sumPeso = 0.0;
 				//
 				if( lista.get(j).nodulos.size() > lista.get(h).nodulos.size())
-					nodulos = lista.get(j).nodulos.size();
+					nodulos = lista.get(j).nodulos.size()-29;
 				else
-					nodulos = lista.get(h).nodulos.size();
+					nodulos = lista.get(h).nodulos.size()-29;
 				//
-				if( 20 > g0.size() || 20 > g1.size())
-					nodulos = 1;
 				while( i < g0.size() || i < g1.size())
 				{
 					if(( i < g0.size() && i < g1.size())){
@@ -56,7 +54,7 @@ public class Especie {
 						excess++;
 					}
 				}
-				//System.out.println( "("+disjoint +"/"+nodulos+")"+"+(" +excess+"/"+nodulos+")" +"+("+sumPeso+"/"+numPesos+")");
+				System.out.println( "("+disjoint +"/"+nodulos+")"+"+(" +excess+"/"+nodulos+")" +"+("+sumPeso+"/"+numPesos+")");
 				if( numPesos == 0)
 					numPesos = 1;
 				double deltaAlt = ( Especie.c0* excess/nodulos) + ( Especie.c1* disjoint/nodulos) +( Especie.c2* sumPeso/numPesos) - Especie.constEspec;
@@ -66,11 +64,11 @@ public class Especie {
 					Especie.especies[Especie.numEspc]++;
 				}
 				h++;
-				if( h == lista.size()) {
-					Especie.especies[Especie.numEspc]++;
-					lista.get(j).especie = Especie.numEspc;
-					Especie.numEspc++;
-				}
+			}
+			if( h != j+1) {
+				Especie.especies[Especie.numEspc]++;
+				lista.get(j).especie = Especie.numEspc;
+				Especie.numEspc++;
 			}
 			j++;
 		}
