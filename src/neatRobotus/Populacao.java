@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class Populacao{
+public abstract class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
 	protected static int maxGenoma = 0;
 	protected static int geracao = 0;
@@ -19,7 +19,6 @@ public class Populacao{
 	private static int numStatic = 0;
 	
 	private static int TAMANHO_GERACAO = 300;
-	private static Scanner s;
 	
 	
 	public static void populacaoInit(){
@@ -168,8 +167,7 @@ public class Populacao{
 		}
 	}
 	
-	protected static void selecionar(){
-		s = new Scanner(System.in); 
+	protected static void selecionar(){ 
 		ArrayList<Genoma> perpetuados = new ArrayList<Genoma>();
 		Genoma g[] = new Genoma[TAMANHO_GERACAO/3];
 		
@@ -210,12 +208,10 @@ public class Populacao{
 
 	
 	public static void debug(){
-		s = new Scanner(System.in);
 		/* DEBUG*/
 		for(int i = 0; i < Populacao.genomas.size(); i++)
 		{
 			System.out.println(Populacao.genomas.get(i).getFitness());
 		}
-		s.nextInt();
 	}
 }

@@ -2,10 +2,10 @@ package neatRobotus;
 
 import java.util.ArrayList;
 
-public class Especie {
+public abstract class Especie {
 	
 	protected static int numEspc = 0;
-	public static int especies[] = new int[300];
+	protected static int especies[] = new int[300];
 	private static double c0 = 1, c1 = 1, c2 = 0.4, constEspec = 3;
 	
 	

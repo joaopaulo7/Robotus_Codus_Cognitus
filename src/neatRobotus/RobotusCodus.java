@@ -16,7 +16,6 @@ import java.io.ObjectInputStream;
 public class RobotusCodus extends AdvancedRobot{
 
 	Genoma genoma;
-	int fit = 0;
 		public void run() {
 			// Set colors
 			setBodyColor(Color.black);
@@ -286,8 +285,5 @@ public class RobotusCodus extends AdvancedRobot{
 			if(r[9] == 1)
 				resume();
 			
-			if( getEnergy() == 0) {
-				this.fit = -100;
-			}
 		}
 }
