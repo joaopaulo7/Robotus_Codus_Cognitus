@@ -15,7 +15,7 @@ public class Principal {
 	
 	public static void main(String Args[]){
 		s = new Scanner(System.in);
-		Populacao.populacaoInit();
+		Populacao.populacaoInit(0);
 		BattleRunner batalha = new BattleRunner();
 		int maxFit = 0, count = 0, numGenes, numNod;
 		double maxFitEq = 0,  sumFit = 0, sumFitEq =0;

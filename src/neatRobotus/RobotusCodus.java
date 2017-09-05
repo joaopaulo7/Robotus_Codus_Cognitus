@@ -270,14 +270,14 @@ public class RobotusCodus extends AdvancedRobot{
 				 	roboto.getVelocity()
 				};
 			double r[] = genoma.ativar(v);
+			if( r[2] > 0)
+				fire( r[2]);
 			ahead( r[0]);
 			back( r[1]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if( r[2] > 0)
-				fire( r[2]);
 			if(r[7] == 1)
 				doNothing();
 			if(r[8] == 1)

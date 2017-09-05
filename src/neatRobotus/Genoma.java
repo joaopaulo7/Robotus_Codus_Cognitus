@@ -118,7 +118,7 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Mutações
 	public void mutar( int potencial){
 		int i = 0;
-		potencial += ( ( int) this.genes.size()/7);
+		potencial += ( ( int) this.genes.size()/30);
 		while(i < potencial){
 			if( Math.random() < this.MUTAR_CONEXAO || genes.isEmpty()){
 				//this.MUTAR_CONEXAO *= 0.7;

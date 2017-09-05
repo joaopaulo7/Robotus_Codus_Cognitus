@@ -6,7 +6,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
-	private double peso = ((Math.random()*200)%100)-50;
+	private double peso = ((Math.random()*100)%100)-50;
 	private boolean ativado = true;
 	private int inovacao = 0;
 	
@@ -40,11 +40,11 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	public void mutarPeso(){
 		double rand = Math.random();
 		if( rand < 0.1)
-			this.peso =((Math.random()*200)%100)-50;
+			this.peso =((Math.random()*100)%100)-50;
 		else if( rand < 0.55)
-			this.peso *= 0.7;
+			this.peso *= 0.5;
 		else
-			this.peso *= 1.3;
+			this.peso *= 1.5;
 	}
 	
 	public double getPeso(){

@@ -24,6 +24,7 @@ public abstract class Populacao{
 	public static void populacaoInit(){
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
 			Populacao.genomas.add(new Genoma(1));
+		Collections.sort(genomas);
 		Especie.formarEspecies( Populacao.genomas);
 	}
 	
