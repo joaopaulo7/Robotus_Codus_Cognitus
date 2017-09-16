@@ -118,7 +118,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	//Mutações
 	public void mutar( int potencial){
 		int i = 0;
-		potencial += ( ( int) this.genes.size()/30);
 		while(i < potencial){
 			if( Math.random() < this.MUTAR_CONEXAO || genes.isEmpty()){
 				//this.MUTAR_CONEXAO *= 0.7;
@@ -130,12 +129,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 					i++;
 				}
 			}
-			if( Math.random() < this.MUTAR_NODULO && !genes.isEmpty()){
+			else if( Math.random() < this.MUTAR_NODULO && !genes.isEmpty()){
 				//this.MUTAR_NODULO *= 0.7;
 				this.adicionarNodulo(this.conexaoAleatoria());
 				i++;
 			}
-			if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
+			else if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
 				this.mutarPeso();
 				i++;
 			}

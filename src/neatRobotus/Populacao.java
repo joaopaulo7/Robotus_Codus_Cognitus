@@ -18,7 +18,7 @@ public abstract class Populacao{
 	private static double atMedFit = 0;
 	private static int numStatic = 0;
 	
-	private static int TAMANHO_GERACAO = 300;
+	private static int TAMANHO_GERACAO = 240;
 	
 	
 	public static void populacaoInit(){
@@ -200,7 +200,6 @@ public abstract class Populacao{
 		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
 		{
 			Genoma copia = g[i].copiar();
-			copia.mutar( 1+ (( int)Populacao.numStatic/5));
 			perpetuados.add(copia);
 		}
 		Especie.formarEspecies( perpetuados);
