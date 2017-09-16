@@ -42,9 +42,9 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 		if( rand < 0.1)
 			this.peso =((Math.random()*100)%100)-50;
 		else if( rand < 0.55)
-			this.peso *= 0.5;
+			this.peso *= 0.7;
 		else
-			this.peso *= 1.5;
+			this.peso *= 1.3;
 	}
 	
 	public double getPeso(){
