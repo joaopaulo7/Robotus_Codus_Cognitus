@@ -20,8 +20,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
 	protected int especie = -1;
 	
-	protected double MUTAR_CONEXAO = 0.3;
-	protected double MUTAR_NODULO = 0.1;
+	protected double MUTAR_CONEXAO = 0.03;
+	protected double MUTAR_NODULO = 0.01;
 	protected static double MUTAR_PESO = 1;
 	protected int NUM_INPUT = 0;
 	protected int NUM_OUTPUT = 0;

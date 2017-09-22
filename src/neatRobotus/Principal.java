@@ -15,7 +15,7 @@ public class Principal {
 	
 	public static void main(String Args[]){
 		s = new Scanner(System.in);
-		Populacao.populacaoInit(1);
+		Populacao.populacaoInit(47);
 		BattleRunner batalha = new BattleRunner();
 		int maxFit = 0, count = 0, numGenes, numNod;
 		double maxFitEq = 0,  sumFit = 0, sumFitEq =0;
@@ -23,7 +23,7 @@ public class Principal {
 		do{	
 			
 			Populacao.genese();
-			batalha.startBatalha( false);
+			batalha.startBatalha( true);
 			
 			if( evento[0].getTeamLeaderName() == "neatRobotus.RobotusCodus*")
 				break;
