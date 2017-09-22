@@ -20,8 +20,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
 	protected int especie = -1;
 	
-	protected double MUTAR_CONEXAO = 0.06;
-	protected double MUTAR_NODULO = 0.02;
+	protected double MUTAR_CONEXAO = 0.3;
+	protected double MUTAR_NODULO = 0.1;
 	protected static double MUTAR_PESO = 1;
 	protected int NUM_INPUT = 0;
 	protected int NUM_OUTPUT = 0;
@@ -119,7 +119,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	public void mutar( int potencial){
 		int i = 0;
 		while(i < potencial){
-			if( Math.random() < this.MUTAR_CONEXAO || genes.isEmpty()){
+			double rand = Math.random();
+			if( rand < this.MUTAR_CONEXAO || genes.isEmpty()){
 				//this.MUTAR_CONEXAO *= 0.7;
 				//encontra 2 nódulos possíveis
 				int idAnt = this.noduloAleatorio( true, -1);
@@ -129,16 +130,21 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 					i++;
 				}
 			}
-			else if( Math.random() < this.MUTAR_NODULO && !genes.isEmpty()){
-				//this.MUTAR_NODULO *= 0.7;
-				this.adicionarNodulo(this.conexaoAleatoria());
-				i++;
+			else
+			{
+				rand = Math.random();
+				if( rand < this.MUTAR_NODULO && !genes.isEmpty()) {
+					//this.MUTAR_NODULO *= 0.7;
+					this.adicionarNodulo(this.conexaoAleatoria());
+					i++;
+				}
+				rand = Math.random();
+				if( rand < Genoma.MUTAR_PESO && !genes.isEmpty()){
+					this.mutarPeso();
+					i++;
+				}
+				Collections.sort(this.genes);
 			}
-			else if( Math.random() < Genoma.MUTAR_PESO && !genes.isEmpty()){
-				this.mutarPeso();
-				i++;
-			}
-			Collections.sort(this.genes);
 		}
 	}
 	
