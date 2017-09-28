@@ -49,10 +49,6 @@ class Input extends Nodulo{
 	
 	protected String nome = "#";
 	
-	public Input( String nome){
-		this.nome = nome;
-	}
-	
 	public String getNome(){
 		return this.nome;
 	}
@@ -64,27 +60,27 @@ class Input extends Nodulo{
 class Output extends Input{
 
 
-	public Output(String nome) {
-		super(nome);
-	}
+	public Output() {}
 
 	private static final long serialVersionUID = 1L;
 	protected double valor = 0.0;
 	
-	public void ativar( double soma){
-		this.valor = soma;
+	public void ativar( double valor){
+		this.valor = valor;
 	}
 	
-	public double calcularSaida(){ return this.valor; }
+	public double calcularSaida(){
+		double valor = this.valor;
+		this.valor = 0.0; 
+		return valor;
+		}
 }
 
 //Os outputs são diferênciados pela formatação da saída.
 
 class OutputAngular extends Output{
 
-	public OutputAngular(String nome) {
-		super(nome);
-	}
+	public OutputAngular() {}
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -98,12 +94,9 @@ class OutputAngular extends Output{
 
 class OutputBool extends Output{
 
-
 	private static final long serialVersionUID = 1L;
 
-	public OutputBool(String nome) {
-		super(nome);
-	}
+	public OutputBool() {}
 	
 	public double calcularSaida()
 	{
@@ -119,19 +112,16 @@ class OutputBool extends Output{
 
 class OutputShoot extends Output{
 
-
 	private static final long serialVersionUID = 1L;
 
-		public OutputShoot(String nome) {
-			super(nome);
-		}
+	public OutputShoot() {}
 		
-		public double calcularSaida()
-		{
-			double valor = this.valor;
-			this.valor = 0.0;
-			return valor%3;
-		}
+	public double calcularSaida()
+	{
+		double valor = this.valor;
+		this.valor = 0.0;
+		return valor%3;
+	}
 }
 
 class OutputWalk extends Output{
@@ -139,28 +129,23 @@ class OutputWalk extends Output{
 
 	private static final long serialVersionUID = 1L;
 
-		public OutputWalk(String nome) {
-			super(nome);
-		}
+	public OutputWalk() {}
 		
-		public double calcularSaida()
-		{
-			double valor = this.valor;
-			this.valor = 0.0;
-			return Math.abs(valor%200);
-		}
+	public double calcularSaida()
+	{
+		double valor = this.valor;
+		this.valor = 0.0;
+		return Math.abs(valor%200);
+	}
 }
 class Bias extends Input{
  
-	public Bias(String nome) {
-		super(nome);
-	}
+	public Bias() {}
+	
 	private static final long serialVersionUID = 1L;
 	
 	public void mutarAleatorio(){
 		int rand = ( int) (Math.random()*1000)%this.posterior.size();
 		this.posterior.get(rand).mutarPeso();
 	}
-	
-
 }

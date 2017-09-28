@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 public abstract class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
@@ -21,16 +20,18 @@ public abstract class Populacao{
 	public static int TAMANHO_GERACAO = 240;
 	
 	
-	public static void populacaoInit(){
+	public static void populacaoInit( int input, int output){
+		Genoma.genomaInit(input, output);
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
-			Populacao.genomas.add(new Genoma(1));
+			Populacao.genomas.add(new Genoma());
 		Collections.sort(genomas);
 		Especie.formarEspecies( Populacao.genomas);
 	}
 	
-	public static void populacaoInit( int i) {
-	     try {
-	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+i+".ser");
+	public static void populacaoInit( int input, int output, int geracao) {
+		Genoma.genomaInit(input, output);
+		try {
+	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+geracao+".ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         Populacao.genomas = (ArrayList<Genoma>) in.readObject();
 	         in.close();
@@ -43,13 +44,9 @@ public abstract class Populacao{
 	         c.printStackTrace();
 	         return;
 	      }
-	     Populacao.geracao = i;
+	     Populacao.geracao = geracao;
 	     Especie.formarEspecies( Populacao.genomas);
 	     Collections.sort(genomas);
-	}
-	
-	public static Genoma getGenoma(){
-		return Populacao.genomas.get( Populacao.maxGenoma -1);
 	}
 	
 	public static void genese(){
@@ -72,12 +69,25 @@ public abstract class Populacao{
 			Populacao.geracao++;
 		}
 	}
-	
+	//############################GETS E SETS#################INÍCIO
 	public static void setFitness( double fit){
 		Populacao.genomas.get(Populacao.maxGenoma).setFitness(fit);
 		Populacao.atMedFit += Populacao.genomas.get(Populacao.maxGenoma).getFitness()/Populacao.TAMANHO_GERACAO;
 		Populacao.maxGenoma++;
 	}
+	
+	public static Genoma getGenoma(){
+		return Populacao.genomas.get( Populacao.maxGenoma -1);
+	}
+	public static int getEspecies() {
+		return Especie.numEspc;
+	}
+	public static int getGeracao() {
+		return Populacao.geracao;
+	}
+	
+	//############################GETS E SETS#################FIM
+	
 	
 	public static Genoma crossOver( Genoma mae, Genoma pai){
 		int i = 0, j = 0;
@@ -206,7 +216,7 @@ public abstract class Populacao{
 		Especie.formarEspecies( perpetuados);
 		Populacao.genomas = perpetuados;
 	}
-
+	
 	
 	public static void debug(){
 		/* DEBUG*/

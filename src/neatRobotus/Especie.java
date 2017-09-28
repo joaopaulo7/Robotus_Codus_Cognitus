@@ -30,9 +30,9 @@ public abstract class Especie {
 				double sumPeso = 0.0;
 				//
 				if( lista.get(j).nodulos.size() > lista.get(h).nodulos.size())
-					nodulos = lista.get(j).nodulos.size()-29;
+					nodulos = lista.get(j).nodulos.size()-Genoma.NUM_NODULOSBASE;
 				else
-					nodulos = lista.get(h).nodulos.size()-29;
+					nodulos = lista.get(h).nodulos.size()-Genoma.NUM_NODULOSBASE;
 				//
 				while( i < g0.size() || i < g1.size())
 				{
