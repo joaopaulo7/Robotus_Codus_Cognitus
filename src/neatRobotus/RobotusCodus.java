@@ -25,7 +25,7 @@ public class RobotusCodus extends AdvancedRobot{
 			setBulletColor(Color.blue);
 		   // setAdjustGunForRobotTurn(true);
 		     try {
-		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma0.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         genoma = (Genoma) in.readObject();
 		         in.close();
@@ -74,12 +74,11 @@ public class RobotusCodus extends AdvancedRobot{
 							turnLeft( r[3]);
 							turnRight( r[4]);
 							turnGunLeft( r[5]);
-							turnGunRight( r[6]);
-							if(r[7] == 1)
+							if(r[7] >= 1)
 								doNothing();
-							if(r[8] == 1)
+							if(r[8] >= 1)
 								stop();
-							if(r[9] == 1)
+							if(r[9] >= 1)
 								resume();
 
 			}
@@ -118,11 +117,11 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if(r[7] == 1)
+			if(r[7] >= 1)
 				doNothing();
-			if(r[8] == 1)
+			if(r[8] >= 1)
 				stop();
-			if(r[9] == 1)
+			if(r[9] >= 1)
 				resume();
 		}
 		
@@ -159,11 +158,11 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if(r[7] == 1)
+			if(r[7] >= 1)
 				doNothing();
-			if(r[8] == 1)
+			if(r[8] >= 1)
 				stop();
-			if(r[9] == 1)
+			if(r[9] >= 1)
 				resume();
 	}
 		public void onHitRobot( HitRobotEvent e){
@@ -199,11 +198,11 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if(r[7] == 1)
+			if(r[7] >= 1)
 				doNothing();
-			if(r[8] == 1)
+			if(r[8] >= 1)
 				stop();
-			if(r[9] == 1)
+			if(r[9] >= 1)
 				resume();
 	}
 		public void onHitWall( HitWallEvent e){
@@ -237,11 +236,11 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if(r[7] == 1)
+			if(r[7] >= 1)
 				doNothing();
-			if(r[8] == 1)
+			if(r[8] >= 1)
 				stop();
-			if(r[9] == 1)
+			if(r[9] >= 1)
 				resume();
 	}
 		
@@ -278,11 +277,11 @@ public class RobotusCodus extends AdvancedRobot{
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
 			turnGunRight( r[6]);
-			if(r[7] == 1)
+			if(r[7] >= 1)
 				doNothing();
-			if(r[8] == 1)
+			if(r[8] >= 1)
 				stop();
-			if(r[9] == 1)
+			if(r[9] >= 1)
 				resume();
 			
 		}

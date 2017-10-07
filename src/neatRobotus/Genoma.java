@@ -17,11 +17,12 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<double[]> inovacao = new ArrayList<double[]>();
 	protected ArrayList<Conexao> genes = new ArrayList<Conexao>();
 	protected ArrayList<Nodulo> nodulos = new ArrayList<Nodulo>();
+	protected static ArrayList<double []> outputsType = new ArrayList<double[]>();
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
 	protected int especie = -1;
 	
-	protected double MUTAR_CONEXAO = 0.03;
-	protected double MUTAR_NODULO = 0.01;
+	protected double MUTAR_CONEXAO = 0.06;
+	protected double MUTAR_NODULO = 0.02;
 	protected static double MUTAR_PESO = 1;
 	protected  int numInput = 0;
 	protected static int NUM_INPUT = 0;
@@ -32,12 +33,15 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	
 	//Criacao de genomas
 	
-	protected static void genomaInit( int input, int output){
+	protected static void genomaInit( int input){
 		Genoma.NUM_INPUT = input;
 		System.out.println(input);
-		Genoma.NUM_OUTPUT = output;
-		System.out.println(output);
-		Genoma.NUM_NODULOSBASE = input + output;
+		Genoma.NUM_NODULOSBASE = Genoma.NUM_INPUT + Genoma.NUM_OUTPUT;
+	}
+	
+	protected static void outputInit( double v[]){
+		Genoma.outputsType.add(v);
+		Genoma.NUM_OUTPUT++;
 	}
 	
 	public Genoma(){
@@ -54,9 +58,10 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 				
 		
 		//Declaração de Outputs
-			for( int i = 0; i < Genoma.NUM_INPUT; i++)
+			for( int i = 0; i < Genoma.outputsType.size(); i++)
 			{
-				this.outputs.add(new Output());
+				double v[] = Genoma.outputsType.get(i);
+				this.outputs.add(new Output( v[0], v[1], v[2]));
 			}
 
 			
@@ -64,11 +69,10 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 				this.nodulos.add(this.outputs.get(i));
 			for(int i = 0; i< this.nodulos.size(); i++){
 				this.nodulos.get(i).id = i;
-				if(i > this.numInput)
-					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i), 0));
+				if(i >= this.numInput)
+					this.bias.addSaida( new Conexao(bias, this.nodulos.get(i)));
 			}
-			
-			this.mutar(1);
+			this.mutar(100);
 	}
 	
 	public static Genoma montarGenoma( ArrayList<Conexao> conexoes, int numNodulos, Bias bias)

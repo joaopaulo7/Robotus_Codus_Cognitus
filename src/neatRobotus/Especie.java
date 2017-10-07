@@ -30,9 +30,9 @@ public abstract class Especie {
 				double sumPeso = 0.0;
 				//
 				if( lista.get(j).nodulos.size() > lista.get(h).nodulos.size())
-					nodulos = lista.get(j).nodulos.size()-Genoma.NUM_NODULOSBASE;
+					nodulos = lista.get(j).nodulos.size()-Genoma.NUM_NODULOSBASE+1;
 				else
-					nodulos = lista.get(h).nodulos.size()-Genoma.NUM_NODULOSBASE;
+					nodulos = lista.get(h).nodulos.size()-Genoma.NUM_NODULOSBASE+1;
 				//
 				while( i < g0.size() || i < g1.size())
 				{
@@ -59,13 +59,13 @@ public abstract class Especie {
 					numPesos = 1;
 				double deltaAlt = ( Especie.c0* excess/nodulos) + ( Especie.c1* disjoint/nodulos) +( Especie.c2* sumPeso/numPesos) - Especie.constEspec;
 				System.out.println( deltaAlt);
-				if( deltaAlt < 0) {
+				if( deltaAlt < Especie.constEspec) {
 					lista.get(h).especie = Especie.numEspc;
 					Especie.especies[Especie.numEspc]++;
 				}
 				h++;
 			}
-			if( h != j+1) {
+			if( lista.get(j).especie == -1) {
 				Especie.especies[Especie.numEspc]++;
 				lista.get(j).especie = Especie.numEspc;
 				Especie.numEspc++;

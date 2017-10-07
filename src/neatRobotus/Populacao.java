@@ -10,6 +10,7 @@ import java.util.Collections;
 
 public abstract class Populacao{
 	protected static ArrayList<Genoma> genomas = new ArrayList<Genoma>();
+	protected static int testados;
 	protected static int maxGenoma = 0;
 	protected static int geracao = 0;
 	
@@ -20,16 +21,18 @@ public abstract class Populacao{
 	public static int TAMANHO_GERACAO = 240;
 	
 	
-	public static void populacaoInit( int input, int output){
-		Genoma.genomaInit(input, output);
+	public static void populacaoInit( int input, int testados){
+		Populacao.testados = testados;
+		Genoma.genomaInit(input);
 		for( int i = 0; i < Populacao.TAMANHO_GERACAO; i++)
 			Populacao.genomas.add(new Genoma());
 		Collections.sort(genomas);
 		Especie.formarEspecies( Populacao.genomas);
 	}
 	
-	public static void populacaoInit( int input, int output, int geracao) {
-		Genoma.genomaInit(input, output);
+	public static void populacaoInit( int input, int testados, int geracao){
+		Populacao.testados = testados;
+		Genoma.genomaInit(input);
 		try {
 	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+geracao+".ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -52,8 +55,10 @@ public abstract class Populacao{
 	public static void genese(){
 		if(Populacao.maxGenoma < TAMANHO_GERACAO)
 		{
-			Genoma g = genomas.get(Populacao.maxGenoma);
-			Populacao.salvar(g);
+			for( int i = 0; i < Populacao.testados; i++) {
+				Genoma g = genomas.get(Populacao.maxGenoma);
+				Populacao.salvar( g, i);
+			}
 		}
 		else
 		{
@@ -65,15 +70,19 @@ public abstract class Populacao{
 			Populacao.atMedFit = 0;
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
-			Populacao.salvar(Populacao.genomas);
+			if( Populacao.geracao == 50)
+				Populacao.salvar(Populacao.genomas);
 			Populacao.geracao++;
 		}
 	}
+	
 	//############################GETS E SETS#################INÍCIO
 	public static void setFitness( double fit){
-		Populacao.genomas.get(Populacao.maxGenoma).setFitness(fit);
-		Populacao.atMedFit += Populacao.genomas.get(Populacao.maxGenoma).getFitness()/Populacao.TAMANHO_GERACAO;
-		Populacao.maxGenoma++;
+		for( int  i = 0; i < Populacao.testados; i++) {
+			Populacao.genomas.get(Populacao.maxGenoma).setFitness(fit);
+			Populacao.atMedFit += Populacao.genomas.get(Populacao.maxGenoma).getFitness()/Populacao.TAMANHO_GERACAO;
+			Populacao.maxGenoma++;
+		}
 	}
 	
 	public static Genoma getGenoma(){
@@ -86,8 +95,15 @@ public abstract class Populacao{
 		return Populacao.geracao;
 	}
 	
-	//############################GETS E SETS#################FIM
+	public static void setOutput( boolean modular, double min, double max) {
+		if( modular)
+			Genoma.outputInit( new double[] { 1, min, max} );
+		else
+			Genoma.outputInit( new double[] { 0, min, max} );
+	}
 	
+	
+	//############################GETS E SETS#################FIM
 	
 	public static Genoma crossOver( Genoma mae, Genoma pai){
 		int i = 0, j = 0;
@@ -142,20 +158,20 @@ public abstract class Populacao{
 			return Genoma.montarGenoma( filho, pai.nodulos.size(), pai.bias);
 	}
 	
-	protected static boolean salvar(Genoma g){
+	protected static boolean salvar(Genoma g, int i){
 		try 
 		{
-	         FileOutputStream fileOut = new FileOutputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+	         FileOutputStream fileOut = new FileOutputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma"+i+".ser");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         out.writeObject(g);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma.ser");
+	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma"+i+".ser");
 	         return true;
 		}
-		catch(IOException i)
+		catch(IOException e)
 		{
-	         i.printStackTrace();
+	         e.printStackTrace();
 	 		return false;
 		}
 	}
@@ -171,9 +187,9 @@ public abstract class Populacao{
 	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+".ser");
 	         return true;
 		}
-		catch(IOException i)
+		catch(IOException e)
 		{
-	         i.printStackTrace();
+	         e.printStackTrace();
 	 		return false;
 		}
 	}
