@@ -18,7 +18,7 @@ public abstract class Populacao{
 	private static double atMedFit = 0;
 	private static int numStatic = 0;
 	
-	public static int TAMANHO_GERACAO = 240;
+	public static int TAMANHO_GERACAO = 120;
 	
 	
 	public static void populacaoInit( int input, int testados){
@@ -56,8 +56,12 @@ public abstract class Populacao{
 		if(Populacao.maxGenoma < TAMANHO_GERACAO)
 		{
 			for( int i = 0; i < Populacao.testados; i++) {
-				Genoma g = genomas.get(Populacao.maxGenoma);
-				Populacao.salvar( g, i);
+				int rand = (int) ( Math.random()*300)%(TAMANHO_GERACAO-maxGenoma);
+				Genoma g = genomas.remove( rand);
+				System.out.println(TAMANHO_GERACAO-maxGenoma);
+				genomas.add(g);
+				System.out.println(genomas.size());
+				Populacao.salvar( g, i, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma");
 			}
 		}
 		else
@@ -70,29 +74,40 @@ public abstract class Populacao{
 			Populacao.atMedFit = 0;
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
-			if( Populacao.geracao == 50)
+			Collections.sort( Populacao.genomas);
+			if( Populacao.geracao%10 == 0)
+				Populacao.salvar( Populacao.genomas.get(0), Populacao.geracao/10, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma");
+			if( Populacao.geracao%10 == 0)
 				Populacao.salvar(Populacao.genomas);
 			Populacao.geracao++;
 		}
 	}
 	
 	//############################GETS E SETS#################INÍCIO
-	public static void setFitness( double fit){
+	public static void setFitness( double fit[]){
 		for( int  i = 0; i < Populacao.testados; i++) {
-			Populacao.genomas.get(Populacao.maxGenoma).setFitness(fit);
+			Populacao.genomas.get(TAMANHO_GERACAO - Populacao.testados +i).setFitness(fit[i]);
 			Populacao.atMedFit += Populacao.genomas.get(Populacao.maxGenoma).getFitness()/Populacao.TAMANHO_GERACAO;
 			Populacao.maxGenoma++;
 		}
 	}
 	
 	public static Genoma getGenoma(){
-		return Populacao.genomas.get( Populacao.maxGenoma -1);
+		return Populacao.genomas.get( Populacao.TAMANHO_GERACAO -1);
 	}
 	public static int getEspecies() {
 		return Especie.numEspc;
 	}
 	public static int getGeracao() {
 		return Populacao.geracao;
+	}
+	
+	public static int getGenes() {
+		return Populacao.getGenoma().genes.size();
+	}
+	
+	public static int getNodulos() {
+		return Populacao.getGenoma().nodulos.size();
 	}
 	
 	public static void setOutput( boolean modular, double min, double max) {
@@ -158,15 +173,15 @@ public abstract class Populacao{
 			return Genoma.montarGenoma( filho, pai.nodulos.size(), pai.bias);
 	}
 	
-	protected static boolean salvar(Genoma g, int i){
+	protected static boolean salvar(Genoma g, int i, String local){
 		try 
 		{
-	         FileOutputStream fileOut = new FileOutputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma"+i+".ser");
+	         FileOutputStream fileOut = new FileOutputStream(local+i+".ser");
 	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
 	         out.writeObject(g);
 	         out.close();
 	         fileOut.close();
-	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma"+i+".ser");
+	         System.out.printf("Objeto salvo(serializado) em: "+local+i+".ser");
 	         return true;
 		}
 		catch(IOException e)
@@ -194,7 +209,7 @@ public abstract class Populacao{
 		}
 	}
 	
-	protected static void selecionar(){ 
+	protected static void selecionar(){
 		ArrayList<Genoma> perpetuados = new ArrayList<Genoma>();
 		Genoma g[] = new Genoma[TAMANHO_GERACAO/3];
 		
@@ -213,20 +228,25 @@ public abstract class Populacao{
 		while( perpetuados.size() < 2*TAMANHO_GERACAO/3){
 			Genoma g0 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
 			Genoma g1 = g[(int) ((Math.random()*100000)%TAMANHO_GERACAO/3)];
-			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness()))
+			if(( g0.especie == g1.especie && g0.getFitness() > g1.getFitness())&& Especie.numEspc > 30)
 			{
-				perpetuados.add( Populacao.crossOver( g0, g1));
+				Genoma filho = Populacao.crossOver( g0, g1);
+				perpetuados.add( filho);
 			}
-			else if( g0.especie == g1.especie)
+			else if( g0.especie == g1.especie && Especie.numEspc > 30)
 			{
 				perpetuados.add( Populacao.crossOver( g1, g0));
+			}
+			else if ( g0 != g1)
+			{
+				Genoma copia = g1.copiar();
+				perpetuados.add(copia);
 			}
 		}
 		
 		for(int i = 0; i < TAMANHO_GERACAO/3; i++)
 		{
 			Genoma copia = g[i].copiar();
-			copia.mutar(1);
 			perpetuados.add(copia);
 		}
 		Especie.formarEspecies( perpetuados);

@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 
 
-public class RobotusCodus extends AdvancedRobot{
+public class RobotusCodus0 extends AdvancedRobot{
 
 	Genoma genoma;
 		public void run() {
@@ -25,7 +25,7 @@ public class RobotusCodus extends AdvancedRobot{
 			setBulletColor(Color.blue);
 		   // setAdjustGunForRobotTurn(true);
 		     try {
-		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma0.ser");
+		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma1.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         genoma = (Genoma) in.readObject();
 		         in.close();
@@ -69,8 +69,6 @@ public class RobotusCodus extends AdvancedRobot{
 								 	0
 								};
 							double r[] = genoma.ativar(v);
-							if( r[2] >= 1)
-								fire( r[2]);
 							ahead( r[0]);
 							back( r[1]);
 							turnLeft( r[3]);
@@ -107,7 +105,7 @@ public class RobotusCodus extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -142,7 +140,7 @@ public class RobotusCodus extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -176,7 +174,7 @@ public class RobotusCodus extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -208,8 +206,6 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0
 				};
 			double r[] = genoma.ativar(v);
-			if( r[2] >= 1)
-				fire( r[2]);
 			ahead( r[0]);
 			back( r[1]);
 			turnLeft( r[3]);
@@ -243,7 +239,7 @@ public class RobotusCodus extends AdvancedRobot{
 				 	roboto.getVelocity()
 				};
 			double r[] = genoma.ativar(v);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			ahead( r[0]);
 			back( r[1]);

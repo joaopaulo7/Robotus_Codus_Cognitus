@@ -82,8 +82,8 @@ class Output extends Input{
 			this.valor = Math.abs( this.valor) + this.min;
 		else if( this.valor > 0)
 			this.valor = this.valor + this.min;
-		if( mod)
-			this.valor = Math.abs( this.valor);
+		if( mod && this.valor < 0)
+			this.valor = Math.abs(this.valor*0.1);
 		double valor = (this.valor % max);
 		this.valor = 0.0; 
 		return valor;

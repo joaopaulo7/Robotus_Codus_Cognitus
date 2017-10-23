@@ -23,7 +23,7 @@ public class BattleRunner {
 
         int numberOfRounds = 5;
         BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
-        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*,sample.Fire");
+        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*, Meusrobos.Primeirorobo*");
 
         BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
 

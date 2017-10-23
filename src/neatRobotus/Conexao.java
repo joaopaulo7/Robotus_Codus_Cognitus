@@ -6,7 +6,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
-	private double peso = ((Math.random()*200)%200)-100;
+	private RefDouble peso = new RefDouble (Math.random()*2-1);
 	private boolean ativado = true;
 	private int inovacao = 0;
 	
@@ -15,7 +15,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 		this.posterior = n0;
 	}
 	
-	public Conexao( Nodulo n, Nodulo n0, double peso){
+	public Conexao( Nodulo n, Nodulo n0, RefDouble peso){
 		this.anterior = n;
 		this.posterior = n0;
 		this.peso = peso;
@@ -39,15 +39,30 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	
 	public void mutarPeso(){
 		double rand = Math.random();
-		if( rand < 0.1)
-			this.peso =((Math.random()*200)%200)-100;
-		else if( rand < 0.55)
-			this.peso *= 0.7;
-		else
-			this.peso *= 1.3;
+		if( rand < 0.1) 
+		{
+			System.out.println(this.peso);
+			this.peso.valor = Math.random()*2-1;
+			System.out.println("PESSSSSSSSSSSSOOOOOOOOOOOOOOO");
+			System.out.println(this.peso);
+		}
+		else if( rand < 0.55) 
+		{
+			System.out.println(this.peso);
+			this.peso.valor *= 0.5;
+			System.out.println("PESSSSSSSSSSSSOOOOOOOOOOOOOOO");
+			System.out.println(this.peso);
+		}
+		else 
+		{
+			System.out.println(this.peso);
+			this.peso.valor *= 1.5;
+			System.out.println("PESSSSSSSSSSSSOOOOOOOOOOOOOOO");
+			System.out.println(this.peso);
+		}
 	}
 	
-	public double getPeso(){
+	public RefDouble getPeso(){
 		return this.peso;
 	}
 	
@@ -73,7 +88,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	//FUNCIONAR
 	
 	public void ativar( double soma){
-		this.posterior.ativar(soma*this.peso);
+		this.posterior.ativar(soma*this.peso.valor);
 	}
 
 	public int compareTo(Conexao outra) {
