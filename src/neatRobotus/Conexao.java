@@ -6,7 +6,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 	
 	private Nodulo anterior = null;
 	private Nodulo posterior = null;
-	private RefDouble peso = new RefDouble (Math.random()*2-1);
+	private RefDouble peso = new RefDouble (Math.random()*10-5);
 	private boolean ativado = true;
 	private int inovacao = 0;
 	
@@ -42,7 +42,7 @@ class Conexao implements java.io.Serializable, Comparable<Conexao>{
 		if( rand < 0.1) 
 		{
 			System.out.println(this.peso);
-			this.peso.valor = Math.random()*2-1;
+			this.peso.valor = Math.random()*10-5;
 			System.out.println("PESSSSSSSSSSSSOOOOOOOOOOOOOOO");
 			System.out.println(this.peso);
 		}

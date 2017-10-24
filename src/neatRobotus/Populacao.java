@@ -58,9 +58,7 @@ public abstract class Populacao{
 			for( int i = 0; i < Populacao.testados; i++) {
 				int rand = (int) ( Math.random()*300)%(TAMANHO_GERACAO-maxGenoma);
 				Genoma g = genomas.remove( rand);
-				System.out.println(TAMANHO_GERACAO-maxGenoma);
 				genomas.add(g);
-				System.out.println(genomas.size());
 				Populacao.salvar( g, i, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma");
 			}
 		}
