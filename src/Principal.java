@@ -24,7 +24,7 @@ public class Principal {
 		Populacao.setOutput( true, 0, 181);
 		Populacao.setOutput( true, 0, 181);
 		Populacao.setOutput( true, 0, 181);
-		Populacao.populacaoInit(25, 1);
+		Populacao.populacaoInit(21, 1);
 		
 		BattleRunner batalha = new BattleRunner();
 		int maxFit = 0, count = 0, numGenes, numNod;
@@ -63,7 +63,7 @@ public class Principal {
 			if( fit > maxFitEq0)
 				maxFitEq0 = fit;
 			
-			System.out.println( Populacao.getGenes() - (Populacao.getNodulos()-35 + Populacao.getGeracao()+1));
+			System.out.println( Populacao.getGenes() - (Populacao.getNodulos()-28 + Populacao.getGeracao()+1));
 			
 			
 			System.out.println( "\n|Testes: " +count +" |Geração: " +Populacao.getGeracao() +" |Testes na geração: "+ count%Populacao.TAMANHO_GERACAO +"\n|genes: "+ Populacao.getGenes() +"|Nódulos: " + Populacao.getNodulos() +"\n|Especies:" + Populacao.getEspecies() +"\n|Maior fitness:"+ maxFit +" |Maior fitness0:"+maxFit0+" |Fitness Médio: "+ sumFit/count+" |Fitness atual: " +evento[1].getScore()+"\n|Maior fitness especializado:"+ maxFitEq +"|Maior fitness especializado:"+ maxFitEq0 +" |Fitness Especializado Médio: " +Populacao.medFit+" |Especializado atual: "+fit);
@@ -74,7 +74,7 @@ public class Principal {
 		for( int  j = 0; j< 10; j++) {
 		Genoma g = new Genoma();
 		//double v1[] = { 1.0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} ;
-		double v[] = g.ativar( new double[] { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1} );
+		double v[] = g.ativar( new double[] { 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1} );
 			for( int i = 0; i < 7; i++){
 				System.out.println(v[i]);
 			}

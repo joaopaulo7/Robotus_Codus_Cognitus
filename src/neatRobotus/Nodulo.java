@@ -15,10 +15,12 @@ public class Nodulo implements java.io.Serializable{ //Unidade que vai armazenar
 	//GETS E SETS
 	
 	public void ativar( double soma){ //define o valor do nódulo
+		if( soma < 0)
+			soma = soma*0.01;
 		if( !this.posterior.isEmpty() && !ativado){
 			ativado = true;
 			for( int i =0; i < this.posterior.size(); i++){
-				this.posterior.get(i).ativar( soma);
+				this.posterior.get(i).ativar( ((Math.exp(2*soma)-1)/(Math.exp(2*soma)+1)));
 			}
 			ativado = false;
 		}
@@ -77,16 +79,14 @@ class Output extends Input{
 		this.valor = valor;
 	}
 	
-	public double calcularSaida(){
-		if( this.valor < 0)
-			this.valor = Math.abs( this.valor) + this.min;
-		else if( this.valor > 0)
-			this.valor = this.valor + this.min;
-		if( mod && this.valor < 0)
-			this.valor = Math.abs(this.valor*0.1);
-		double valor = (this.valor % max);
-		this.valor = 0.0; 
+	public double getValor(){
 		return valor;
+	}
+	
+	public double calcularSaida(){
+		double valor = this.valor;
+		this.valor = 0.0; 
+		return ((Math.exp(0.08*valor)-1)/(Math.exp(0.08*valor)+1))*max;
 	}
 }
 

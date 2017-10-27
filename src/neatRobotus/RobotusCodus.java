@@ -14,6 +14,8 @@ import java.io.ObjectInputStream;
 
 
 public class RobotusCodus extends AdvancedRobot{
+	
+	protected double r[] = new double[7];
 
 	Genoma genoma;
 		public void run() {
@@ -23,7 +25,7 @@ public class RobotusCodus extends AdvancedRobot{
 			setRadarColor(Color.red);
 			setScanColor(Color.white);
 			setBulletColor(Color.blue);
-		   // setAdjustGunForRobotTurn(true);
+		    setAdjustGunForRobotTurn(true);
 		     try {
 		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/src/neatRobotus/ultimoGenoma0.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
@@ -63,20 +65,18 @@ public class RobotusCodus extends AdvancedRobot{
 								 	0,
 								 	0,
 								 	0,
-								 	0,
-								 	0,
-								 	0,
-								 	0,
 								 	0
 								};
-							double r[] = genoma.ativar(v);
+							r = genoma.ativar(v);
 							ahead( r[0]);
 							back( r[1]);
+							//if( r[2] > 0)
+								//fire( r[2]);
 							turnLeft( r[3]);
 							turnRight( r[4]);
 							turnGunLeft( r[5]);
 							turnGunRight( r[6]);
-			}
+				}
 		}
 		
 		public void onBulletHit( BulletHitEvent e){
@@ -104,10 +104,10 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0
 				};
-			double r[] = genoma.ativar(v);
+			r = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -140,10 +140,10 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0
 				};
-			double r[] = genoma.ativar(v);
+			r = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -175,10 +175,10 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0
 				};
-			double r[] = genoma.ativar(v);
+			r = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] >= 1)
+			if( r[2] > 0)
 				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
@@ -210,8 +210,8 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0
 				};
-			double r[] = genoma.ativar(v);
-			if( r[2] >= 1)
+			r = genoma.ativar(v);
+			if( r[2] > 0)
 				fire( r[2]);
 			ahead( r[0]);
 			back( r[1]);
@@ -221,8 +221,7 @@ public class RobotusCodus extends AdvancedRobot{
 			turnGunRight( r[6]);
 	}
 		
-		public void onScannedRobot(ScannedRobotEvent roboto){
-			
+		public void onScannedRobot(ScannedRobotEvent e) {
 			double v[] = {
 					getBattleFieldHeight(),
 					getBattleFieldWidth(),
@@ -240,15 +239,15 @@ public class RobotusCodus extends AdvancedRobot{
 				 	0,
 				 	0,
 				 	0,
-				 	roboto.getBearing(),
-				 	roboto.getDistance(),
-				 	roboto.getHeading(),
-				 	roboto.getVelocity(),
+				 	e.getBearing(),
+				 	e.getDistance(),
+				 	e.getHeading(),
+				 	e.getVelocity(),
 				 	1
 				};
-			double r[] = genoma.ativar(v);
-			if( r[2] >= 1)
-				fire( r[2]);
+			r = genoma.ativar(v);
+			if( r[2] > 0)
+				fire(r[2]);
 			ahead( r[0]);
 			back( r[1]);
 			turnLeft( r[3]);

@@ -27,8 +27,8 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	protected ArrayList<Output> outputs = new ArrayList<Output>();
 	protected int especie = -1;
 	
-	protected double MUTAR_CONEXAO = 0.024;
-	protected double MUTAR_NODULO = 0.012;
+	protected double MUTAR_CONEXAO = 0.06;
+	protected double MUTAR_NODULO = 0.03;
 	protected static double MUTAR_PESO = 1;
 	protected  int numInput = 0;
 	protected static int NUM_INPUT = 0;
@@ -149,8 +149,11 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	public double[] ativar( double v[]){
 		double g[] = new double[this.numOutput];
 		this.bias.ativar(1);
+		
+		
 		for( int i = 0; i < this.numInput; i++)
 			this.nodulos.get(i).ativar(v[i]);
+		
 		for( int i = 0; i < this.numOutput; i++)
 			g[i] = this.outputs.get(i).calcularSaida();
 		return g;
@@ -242,9 +245,14 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	}
 	
 	public void mutarPeso(){
+		if( Math.random() < 0.1)
+			bias.mutarAleatorio();
+		else 
+		{
 			int id  = ( int)(( Math.random()*1000)%( this.genes.size()));
 			System.out.println(id);
 			this.genes.get(id).mutarPeso();
+		}
 			
 	}
 	
@@ -283,7 +291,6 @@ public class Genoma implements java.io.Serializable, Cloneable, Comparable<Genom
 	}
 	
 	protected static  Genoma carregar( String local) {
-		Genoma genoma;
 	     try {
 	         FileInputStream fileIn = new FileInputStream( local);
 	         ObjectInputStream in = new ObjectInputStream(fileIn);

@@ -1,9 +1,10 @@
+package Teste;
 
 import robocode.control.*;
 import robocode.control.events.*;
 
 
-public class BattleRunner {
+public class BattleRunnerTeste {
 
     public void startBatalha( boolean ver) {
         // Disable log messages from Robocode
@@ -22,7 +23,7 @@ public class BattleRunner {
 
         int numberOfRounds = 5;
         BattlefieldSpecification battlefield = new BattlefieldSpecification(800, 600); // 800x600
-        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus*, Meusrobos.Primeirorobo*");
+        RobotSpecification[] selectedRobots = engine.getLocalRepository("neatRobotus.RobotusCodus0*, Meusrobos.Primeirorobo*");
 
         BattleSpecification battleSpec = new BattleSpecification(numberOfRounds, battlefield, selectedRobots);
 
@@ -48,7 +49,6 @@ class BattleObserver extends BattleAdaptor {
        // for (robocode.BattleResults result : e.getSortedResults()) {
        // 		System.out.println("  " + result.getTeamLeaderName() + ": " + result.getScore());
         //}
-        Principal.evento = e.getSortedResults();
     }
     
     // Called when the game sends out an information message during the battle

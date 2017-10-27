@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public abstract class Especie {
 	
 	protected static int numEspc = 0,  disjoint = 0, excess = 0;
-	protected static int especies[] = new int[300];
-	private static double c0 = 1, c1 = 1, c2 = 1, constEspec = 1, deltaAlt = 0;
+	protected static int especies[] = new int[1000];
+	private static double c0 = 1, c1 = 1, c2 = 0.4, constEspec = 3, deltaAlt = 0;
 	
 	
 	public static void formarEspecies( ArrayList<Genoma> lista){

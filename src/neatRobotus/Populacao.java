@@ -18,7 +18,7 @@ public abstract class Populacao{
 	private static double atMedFit = 0;
 	private static int numStatic = 0;
 	
-	public static int TAMANHO_GERACAO = 120;
+	public static int TAMANHO_GERACAO = 150;
 	
 	
 	public static void populacaoInit( int input, int testados){
@@ -37,6 +37,20 @@ public abstract class Populacao{
 	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+geracao+".ser");
 	         ObjectInputStream in = new ObjectInputStream(fileIn);
 	         Populacao.genomas = (ArrayList<Genoma>) in.readObject();
+	         in.close();
+	         fileIn.close();
+	      }catch(IOException e) {
+	         e.printStackTrace();
+	         return;
+	      }catch(ClassNotFoundException c) {
+	         System.out.println("Genoma não encontrado");
+	         c.printStackTrace();
+	         return;
+	      }
+		try {
+	         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/inovacaoUni");
+	         ObjectInputStream in = new ObjectInputStream(fileIn);
+	         Genoma.inovacaoUni = (ArrayList<int[]>) in.readObject();
 	         in.close();
 	         fileIn.close();
 	      }catch(IOException e) {
@@ -74,7 +88,10 @@ public abstract class Populacao{
 			Populacao.selecionar();
 			Collections.sort( Populacao.genomas);
 			if( Populacao.geracao%10 == 0)
+			{
 				Populacao.salvar( Populacao.genomas.get(0), Populacao.geracao/10, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma");
+				Populacao.salvarInov( Genoma.inovacaoUni);
+			}
 			if( Populacao.geracao%10 == 0)
 				Populacao.salvar(Populacao.genomas);
 			Populacao.geracao++;
@@ -198,6 +215,24 @@ public abstract class Populacao{
 	         out.close();
 	         fileOut.close();
 	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Teste/Geracao"+Populacao.geracao+".ser");
+	         return true;
+		}
+		catch(IOException e)
+		{
+	         e.printStackTrace();
+	 		return false;
+		}
+	}
+	
+	protected static boolean salvarInov( ArrayList<int[]> s){
+		try 
+		{
+	         FileOutputStream fileOut = new FileOutputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/inovacaoUni.ser");
+	         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+	         out.writeObject(s);
+	         out.close();
+	         fileOut.close();
+	         System.out.printf("Objeto salvo(serializado) em: /home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/inovacaoUni.ser");
 	         return true;
 		}
 		catch(IOException e)
