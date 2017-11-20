@@ -25,7 +25,7 @@ public class RobotusCodus0 extends AdvancedRobot{
 			setBulletColor(Color.blue);
 		   // setAdjustGunForRobotTurn(true);
 		     try {
-		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma1.ser");
+		         FileInputStream fileIn = new FileInputStream("/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma30.ser");
 		         ObjectInputStream in = new ObjectInputStream(fileIn);
 		         genoma = (Genoma) in.readObject();
 		         in.close();
@@ -107,8 +107,6 @@ public class RobotusCodus0 extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
@@ -143,8 +141,6 @@ public class RobotusCodus0 extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
@@ -178,8 +174,6 @@ public class RobotusCodus0 extends AdvancedRobot{
 			double r[] = genoma.ativar(v);
 			ahead( r[0]);
 			back( r[1]);
-			if( r[2] > 0)
-				fire( r[2]);
 			turnLeft( r[3]);
 			turnRight( r[4]);
 			turnGunLeft( r[5]);
@@ -246,7 +240,7 @@ public class RobotusCodus0 extends AdvancedRobot{
 				};
 			double r[] = genoma.ativar(v);
 			if( r[2] > 0)
-				fire(400 / roboto.getDistance());
+				fire(r[2]);
 			ahead( r[0]);
 			back( r[1]);
 			turnLeft( r[3]);

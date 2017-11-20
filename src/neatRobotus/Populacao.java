@@ -87,13 +87,11 @@ public abstract class Populacao{
 			Populacao.maxGenoma = 0;
 			Populacao.selecionar();
 			Collections.sort( Populacao.genomas);
-			if( Populacao.geracao%10 == 0)
+			if( Populacao.geracao%2 == 0)
 			{
-				Populacao.salvar( Populacao.genomas.get(0), Populacao.geracao/10, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma");
+				Populacao.salvar( Populacao.genomas.get(0), Populacao.geracao/2, "/home/joao/eclipse-workspace/Robotus_Codus_Cognitus/Genomas/Gernoma");
 				Populacao.salvarInov( Genoma.inovacaoUni);
 			}
-			if( Populacao.geracao%10 == 0)
-				Populacao.salvar(Populacao.genomas);
 			Populacao.geracao++;
 		}
 	}
